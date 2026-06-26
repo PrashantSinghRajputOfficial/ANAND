@@ -1,0 +1,548 @@
+[
+  {
+    "id": "dg-set-panel",
+    "slug": "dg-set-panel",
+    "name": "DG Set Control Panel",
+    "shortDescription": "Control panels for diesel generator sets with manual & automatic options.",
+    "description": "Custom-designed Diesel Generator (DG) set control panels that allow manual or automatic control, diagnostics, and protective shielding of generator systems. Configured with premium relays, meters, and switchgear for reliable operations.",
+    "specs": [
+      {
+        "name": "Control Module",
+        "value": "Deep Sea / SmartGen Controller"
+      },
+      {
+        "name": "Rated Voltage",
+        "value": "12V DC / 24V DC control, 415V AC power"
+      },
+      {
+        "name": "Enclosure Rating",
+        "value": "IP54 / IP55 Steel Enclosure"
+      },
+      {
+        "name": "Meters",
+        "value": "Digital Voltmeter, Ammeter, Frequency, Hour Counter"
+      }
+    ],
+    "features": [
+      "Auto-start and auto-stop sequencing",
+      "Generator parameter protection (low oil pressure, high water temp, over/under speed)",
+      "High quality wiring with ferrule labeling for easy servicing",
+      "Integrated emergency stop system"
+    ],
+    "applications": [
+      "Industrial Plant Standby Power",
+      "Commercial Buildings & Malls",
+      "Hospitals and Critical Operations",
+      "Residential Societies"
+    ],
+    "catalogName": "dg-set-panel-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/AMF-Control-Panel.jpg"
+  },
+  {
+    "id": "electric-control-panel",
+    "slug": "electric-control-panel",
+    "name": "Electric Control Panel",
+    "shortDescription": "General-purpose industrial and commercial electrical control boards.",
+    "description": "Highly durable and compliant electrical control panels fabricated for distribution, machinery operation, and utility control. Engineered with high-conductivity copper busbars and premium switchgear components.",
+    "specs": [
+      {
+        "name": "Busbar Conductivity",
+        "value": "99.9% Pure Electrolytic Copper / Aluminum"
+      },
+      {
+        "name": "Rated Current",
+        "value": "100A to 3200A"
+      },
+      {
+        "name": "Rated Insulation Voltage",
+        "value": "690V / 1000V"
+      },
+      {
+        "name": "Sheet Thickness",
+        "value": "1.6mm to 2.0mm CRCA Sheet Steel"
+      }
+    ],
+    "features": [
+      "Custom compartmentalized designs as per site requirements",
+      "Short-circuit testing certification up to 50kA",
+      "Powder coated finish for superior corrosion resistance",
+      "Excellent thermal ventilation design"
+    ],
+    "applications": [
+      "Machinery Manufacturing Shops",
+      "Textile and Plastic Processing Units",
+      "Cold Storage Facilities",
+      "Educational Institutes"
+    ],
+    "catalogName": "electric-panel-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Industrial-Electrical-Control-Panel.jpg"
+  },
+  {
+    "id": "ht-lt-panel",
+    "slug": "ht-lt-panel",
+    "name": "HT LT Panel",
+    "shortDescription": "High Tension and Low Tension power distribution panels.",
+    "description": "High and Low Tension switchgear panels designed for central power distribution from electrical substations to plant utilities. Fitted with certified vacuum circuit breakers (VCBs) and air circuit breakers (ACBs) to safeguard load paths.",
+    "specs": [
+      {
+        "name": "HT Range",
+        "value": "11kV to 33kV"
+      },
+      {
+        "name": "LT Range",
+        "value": "415V to 690V"
+      },
+      {
+        "name": "Main Switchgear",
+        "value": "VCB (HT) / ACB or MCCB (LT)"
+      },
+      {
+        "name": "Short Circuit Rating",
+        "value": "Up to 50kA for 1 second"
+      }
+    ],
+    "features": [
+      "Vacuum interrupters for HT grids ensuring absolute safety",
+      "Intelligent microprocessor-based overcurrent, short-circuit, and earth faults protective relays",
+      "Busbar trunking compatibility",
+      "Mechanical safety interlocks preventing misoperation"
+    ],
+    "applications": [
+      "Substations and Grid Substations",
+      "Cement & Steel Manufacturing Facilities",
+      "Heavy Machinery Industries",
+      "Power Generation Plants"
+    ],
+    "catalogName": "ht-lt-panel-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/electrical-ht-lt-distribution-panel.jpg"
+  },
+  {
+    "id": "apfc-panel",
+    "slug": "apfc-panel",
+    "name": "APFC Panel",
+    "shortDescription": "Three Phase Automatic Power Factor Correction Panels.",
+    "description": "APFC Panels designed to automatically switch capacitor steps based on dynamic inductive loads. Effectively corrects power factor close to unity (0.99) to eliminate reactive energy penalties from electricity companies.",
+    "specs": [
+      {
+        "name": "Controller type",
+        "value": "Microprocessor-based digital APFC controller (6/8/12/16 stages)"
+      },
+      {
+        "name": "Capacitor elements",
+        "value": "Heavy-duty MPP self-healing capacitors"
+      },
+      {
+        "name": "Reactors",
+        "value": "7% detuned copper/aluminium reactors for harmonic mitigation"
+      },
+      {
+        "name": "Range",
+        "value": "10 KVAR to 1000 KVAR"
+      }
+    ],
+    "features": [
+      "Maintains average PF above 0.98, maximizing efficiency",
+      "Detuned filters block harmful harmonics, extending capacitor life",
+      "Thermostatically controlled exhaust fan cooling systems",
+      "Overcurrent and overvoltage protective trips"
+    ],
+    "applications": [
+      "Plastic Injection Molding Plants",
+      "Automobile Workshops",
+      "Flour Mills and Agro Industries",
+      "Commercial Offices & Warehouses"
+    ],
+    "catalogName": "apfc-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Three-Phase-Apfc-Panel.jpg"
+  },
+  {
+    "id": "pcc-panel",
+    "slug": "pcc-panel",
+    "name": "PCC Panel (Power Control Center)",
+    "shortDescription": "Main Power Control Centers for heavy B2B grid loads.",
+    "description": "Power Control Center (PCC) panels configured to distribute power to major sub-panels and heavy machinery grids. Fully compartmentalized design using motorized switchgear to support stable operations.",
+    "specs": [
+      {
+        "name": "Current Range",
+        "value": "800A to 6300A"
+      },
+      {
+        "name": "Breakers",
+        "value": "Air Circuit Breakers (ACB) or heavy duty MCCBs"
+      },
+      {
+        "name": "Fault level",
+        "value": "50kA to 65kA for 1 second"
+      },
+      {
+        "name": "Enclosure class",
+        "value": "IP54 / IP55 certified"
+      }
+    ],
+    "features": [
+      "Rigid busbar structures structured for high mechanical stress resistance",
+      "High conductivity copper contacts",
+      "Comprehensive digital power monitoring meters with communication interfaces",
+      "Form 4 compartmentalization separating switchgear, busbars, and cable connections"
+    ],
+    "applications": [
+      "Heavy Infrastructure Projects",
+      "Large Factories and Plants",
+      "Hospitals and Commercial Hubs",
+      "Mining Sites"
+    ],
+    "catalogName": "pcc-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Power-Control-Center.jpg"
+  },
+  {
+    "id": "fire-hydrant-panel",
+    "slug": "fire-hydrant-panel",
+    "name": "Fire Hydrant Panel",
+    "shortDescription": "Fire fighting pump control panels with automatic pressure triggers.",
+    "description": "Safety compliant control panels for fire hydrant and sprinkler pump systems. Activates jockey pumps, main hydrant pumps, and standby diesel engine pumps automatically upon grid pressure drops.",
+    "specs": [
+      {
+        "name": "Standard Complied",
+        "value": "National Building Code (NBC) / Local Fire Authority rules"
+      },
+      {
+        "name": "Starter Types",
+        "value": "Star-Delta / DOL Starters"
+      },
+      {
+        "name": "Pump Configurations",
+        "value": "Jockey Pump + Main Electric Pump + Standby Diesel Pump"
+      },
+      {
+        "name": "Control Logic",
+        "value": "Pressure switch triggers, manual test keys"
+      }
+    ],
+    "features": [
+      "Automatic switchover from electric pump to diesel pump on power failure",
+      "Siren alarm alert triggers on pressure failure or pipe bursts",
+      "Dual supply power input paths with auto-changeovers",
+      "Corrosion-resistant red powder coated cabinet finish"
+    ],
+    "applications": [
+      "Multi-story Residential Projects",
+      "Chemical and Warehouse Logistics Complexes",
+      "Hotels and Shopping Malls",
+      "Industrial Plant Yards"
+    ],
+    "catalogName": "fire-hydrant-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Electrical-Distribution-Control-Panel.jpg"
+  },
+  {
+    "id": "mcc-panel",
+    "slug": "mcc-panel",
+    "name": "MCC Panel (Motor Control Center)",
+    "shortDescription": "Motor Control Centers with VFDs and Soft Starters.",
+    "description": "Compartmentalized MCC panels designed to operate multiple induction motors. Incorporates soft starters, variable frequency drives (VFDs), and standard starter units for smooth starting torque and precise speed control.",
+    "specs": [
+      {
+        "name": "Power Capacity",
+        "value": "Up to 500 HP motors"
+      },
+      {
+        "name": "Starters Included",
+        "value": "VFD, Soft Starter, Star-Delta, DOL"
+      },
+      {
+        "name": "Coordination",
+        "value": "Type-2 coordination as per IS/IEC standards"
+      },
+      {
+        "name": "Communication",
+        "value": "Modbus RTU / Profibus / Ethernet interfaces"
+      }
+    ],
+    "features": [
+      "Modular drawer configurations for swift feeder replacement",
+      "Thermal overload protection, single phasing preventers, phase reversal trips",
+      "Forced cooling systems using premium cooling fans",
+      "Padlockable breaker handles for maintenance safety"
+    ],
+    "applications": [
+      "Water Pumping Stations",
+      "Cement Plant Conveyors",
+      "Chemical Processing loops",
+      "HVAC Chiller Plant lines"
+    ],
+    "catalogName": "mcc-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Industrial-Electrical-Control-Panel.jpg"
+  },
+  {
+    "id": "power-distribution-panel",
+    "slug": "power-distribution-panel",
+    "name": "Power Distribution Panel",
+    "shortDescription": "General LT sub-distribution panel boards.",
+    "description": "Robust and reliable Low Tension (LT) sub-distribution panel boards constructed to route electrical circuits to diverse lighting, utility sockets, and small motor loads on plant floors.",
+    "specs": [
+      {
+        "name": "Current Limit",
+        "value": "63A to 1250A"
+      },
+      {
+        "name": "Switchgear components",
+        "value": "Molded Case Circuit Breakers (MCCB) / MCB / ELCB"
+      },
+      {
+        "name": "Feeder Count",
+        "value": "Customizable based on circuit requirements"
+      },
+      {
+        "name": "Enclosure Material",
+        "value": "1.6mm thick CRCA sheet steel"
+      }
+    ],
+    "features": [
+      "Compact space-saving wall-mounting or floor-standing designs",
+      "Integrated earth-leakage trips to prevent electrical shocks",
+      "Highly organized cable trays and neutral/earth links inside",
+      "IP42 / IP52 ingress ratings for dust protection"
+    ],
+    "applications": [
+      "Corporate Office Buildings",
+      "Industrial Plant utility boards",
+      "Educational Campus blocks",
+      "Retail Warehouses"
+    ],
+    "catalogName": "distribution-panel-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Electrical-Distribution-Control-Panel.jpg"
+  },
+  {
+    "id": "plc-electric-panel",
+    "slug": "plc-electric-panel",
+    "name": "PLC Electric Control Panel",
+    "shortDescription": "Intelligent automated control panels using PLCs & HMIs.",
+    "description": "State-of-the-art Programmable Logic Controller (PLC) panels designed to manage complex automation logic, instrument readouts, and pneumatic/hydraulic operations. Fully integrated HMI displays provide active operator monitoring.",
+    "specs": [
+      {
+        "name": "PLC Brands",
+        "value": "Siemens / Schneider / Mitsubishi / Delta"
+      },
+      {
+        "name": "Analog Inputs / Outputs",
+        "value": "4-20mA / 0-10V signal lines"
+      },
+      {
+        "name": "Control Voltage",
+        "value": "24V DC stabilized power supply units"
+      },
+      {
+        "name": "Network Protocol",
+        "value": "Modbus TCP/IP, Profinet, EtherNet/IP"
+      }
+    ],
+    "features": [
+      "Custom HMI mimic layout designs for easy operations",
+      "Opto-isolated terminals protecting PLC inputs from voltage surges",
+      "UPS backup battery power for control logics",
+      "Active process alarms and event logs saved"
+    ],
+    "applications": [
+      "Automobile Assembly loops",
+      "Packaging and Bottling Plants",
+      "Chemical Batching Operations",
+      "Pumping and Water Filtration lines"
+    ],
+    "catalogName": "plc-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/PLC-Electric-Control-Panel.jpg"
+  },
+  {
+    "id": "amf-distribution-panel",
+    "slug": "amf-distribution-panel",
+    "name": "Amf Distribution Panel",
+    "shortDescription": "Automatic transfer panels switching generator utility lines.",
+    "description": "Amf Distribution Panels (and Automatic AMF Panels) designed to handle utility line failure. Triggers standby diesel generators instantly and switches load switches to maintain continuous power supply.",
+    "specs": [
+      {
+        "name": "Switchover Time",
+        "value": "Under 10 seconds"
+      },
+      {
+        "name": "Interlocks",
+        "value": "Dual Electrical & Mechanical interlocking switchgear"
+      },
+      {
+        "name": "Current Capacity",
+        "value": "63A up to 2500A"
+      },
+      {
+        "name": "System Status indicators",
+        "value": "Mains ON, Gen ON, Gen Fault, Auto Charger ON"
+      }
+    ],
+    "features": [
+      "Fail-safe mechanical interlock prevents double line feeding",
+      "Smart battery chargers maintain standby generator starting power",
+      "Integrated emergency start override switch",
+      "Phase-failure and voltage fluctuation sensing circuits"
+    ],
+    "applications": [
+      "Healthcare Towers & Clinics",
+      "Continuous process production plants",
+      "Residential Apartments",
+      "IT Park data centers"
+    ],
+    "catalogName": "amf-distribution-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Amf-Distribution-Panel.jpg"
+  },
+  {
+    "id": "three-phase-dg-sync",
+    "slug": "three-phase-dg-sync",
+    "name": "Three Phase DG Synchronization Panel",
+    "shortDescription": "Generator load sharing and auto synchronization systems.",
+    "description": "Designed to synchronize and parallel multiple diesel generator sets automatically. Optimizes fuel efficiency by engaging generators progressively as power demand scale changes on factory grids.",
+    "specs": [
+      {
+        "name": "Synchronization Parameters",
+        "value": "Voltage matching, Phase angle matching, Frequency matching"
+      },
+      {
+        "name": "Controller relays",
+        "value": "Deif / Deep Sea multi-gen controllers"
+      },
+      {
+        "name": "Load Sharing type",
+        "value": "Active kW / Reactive kVAR sharing grids"
+      },
+      {
+        "name": "Switching breakers",
+        "value": "Motorized ACBs / MCCBs with shunt trip coils"
+      }
+    ],
+    "features": [
+      "Automatic load-shedding of non-critical breakers under overload state",
+      "Saves fuel by shutting down idle generators during low-load intervals",
+      "Protective reverse power trips protecting offline generator units",
+      "Automatic phase alignment checks"
+    ],
+    "applications": [
+      "Heavy Process Plants",
+      "Off-grid mining projects",
+      "Marine and Vessel grid systems",
+      "Continuous chemical processing plants"
+    ],
+    "catalogName": "dg-sync-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Three-Phase-DG-Synchronization-Panel.jpg"
+  },
+  {
+    "id": "earthing-solutions",
+    "slug": "earthing-solutions",
+    "name": "Copper & GI Earthing Systems",
+    "shortDescription": "Chemical ground electrodes, copper strips, and pit covers.",
+    "description": "High-conductive grounding systems designed to discharge voltage surges and short-circuits. Incorporates copper-bonded electrodes, pure copper strips, and moisture-retaining chemical backfills.",
+    "specs": [
+      {
+        "name": "Electrode Length",
+        "value": "2.0 meters / 3.0 meters"
+      },
+      {
+        "name": "Materials",
+        "value": "Solid Copper, Copper-Bonded Steel, GI Electodes"
+      },
+      {
+        "name": "Target Earth Resistance",
+        "value": "Less than 1.0 Ohm"
+      },
+      {
+        "name": "Refill Compound",
+        "value": "Bentonite / Carbon based moisture retaining eco-powder"
+      }
+    ],
+    "features": [
+      "High corrosion resistance providing 15+ years service life",
+      "Saves space over traditional salt/charcoal pits",
+      "Maintains low soil resistance under dry weather profiles",
+      "Tested to meet IS 3043 and IEEE grounding requirements"
+    ],
+    "applications": [
+      "Substations and Transformer pits",
+      "Lightning protection systems",
+      "Data Center server chassis grounding",
+      "CNC Machine earth points"
+    ],
+    "catalogName": "earthing-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Copper-Earthing.jpg"
+  },
+  {
+    "id": "wire-cables",
+    "slug": "wire-cables",
+    "name": "Wire and Cables",
+    "shortDescription": "Polycab, Havells, RR Kabel, and certified power cables.",
+    "description": "Authorized dealership of industrial power cables, flexible wires, and instrument control lines. Available in single-core and multi-core configurations complying with safety fire standards.",
+    "specs": [
+      {
+        "name": "Dealership Brands",
+        "value": "Polycab, Havells, RR Kabel, KEI, Finolex"
+      },
+      {
+        "name": "Voltage Class",
+        "value": "1.1kV Low Tension to 33kV High Tension"
+      },
+      {
+        "name": "Conductor Material",
+        "value": "Electrolytic Copper / EC Grade Aluminum"
+      },
+      {
+        "name": "Insulation Grade",
+        "value": "PVC / XLPE / FR-LSH (Fire Retardant Low Smoke Halogen)"
+      }
+    ],
+    "features": [
+      "FR-LSH coating resists high temperatures and does not release toxic fumes during fire faults",
+      "High dielectric insulation strength",
+      "Armored cables protect conductors from mechanical damage",
+      "High conductivity minimizes line losses"
+    ],
+    "applications": [
+      "Cable tray runs",
+      "Underground grid links",
+      "Machine wiring panels",
+      "Building conduit wires"
+    ],
+    "catalogName": "wires-cables-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/polycab-wires-cables.jpg"
+  },
+  {
+    "id": "transformers",
+    "slug": "transformers",
+    "name": "Transformers",
+    "shortDescription": "Distribution & Power Transformers for industrial step-down setups.",
+    "description": "B2B distribution transformers engineered to step down high line utility voltages (11kV / 33kV) to low factory voltages (433V / 415V). Fully certified for minimal load loss and high dielectric insulation oil strength.",
+    "specs": [
+      {
+        "name": "Capacity range",
+        "value": "100 kVA to 5000 kVA"
+      },
+      {
+        "name": "Cooling type",
+        "value": "ONAN (Oil Natural Air Natural)"
+      },
+      {
+        "name": "Tap Changer",
+        "value": "Off-Circuit Tap Switch / On-Load Tap Changer (OLTC)"
+      },
+      {
+        "name": "Winding Material",
+        "value": "Double paper covered (DPC) Copper conductors"
+      }
+    ],
+    "features": [
+      "Corrugated cooling radiators ensuring optimum oil cooling rates",
+      "Buchholz relay and oil temp gauges warning against internal gas arcs",
+      "Minimal core loss matching BEE star efficiency norms",
+      "Robust pressure-tested mild steel oil tank"
+    ],
+    "applications": [
+      "Industrial Plant utility yards",
+      "RIICO/GIDC estate grid connections",
+      "Commercial Complex yards",
+      "Substation developments"
+    ],
+    "catalogName": "transformers-catalog.pdf",
+    "image": "https://www.anandelectricals.in/product/Three-Phase-DG-Synchronization-Panel.jpg"
+  }
+]

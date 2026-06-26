@@ -1,0 +1,50 @@
+[
+  {
+    "id": "turnkey-electrification",
+    "slug": "turnkey-electrification",
+    "title": "Turnkey Industrial Electrification",
+    "description": "End-to-end electrical design and engineering services from grid substations to factory floor switchgears.",
+    "features": [
+      "HT/LT cable routing design and installation",
+      "Government licensing and electrical safety inspector approvals",
+      "Transformer and generator capacity sizing calculations",
+      "Factory commissioning load trials and testing"
+    ]
+  },
+  {
+    "id": "custom-panel-design",
+    "slug": "custom-panel-design",
+    "title": "Custom Panel Fabrication",
+    "description": "Tailored fabrication of electrical enclosures, custom PLC, APFC, MCC, and PCC panels.",
+    "features": [
+      "3D CAD assembly modeling and thermal calculations",
+      "CNC sheet steel cutting and precision punching",
+      "Busbar bending and primary injection testing",
+      "FAT (Factory Acceptance Testing) logs provided for clients"
+    ]
+  },
+  {
+    "id": "safety-audits",
+    "slug": "safety-audits",
+    "title": "Chemical Earthing & Grounding Installation",
+    "description": "Advanced copper-bonded chemical grounding systems complying with IS 3043 and IEEE grounding requirements.",
+    "features": [
+      "High conductivity moisture-retaining carbon bentonite compound",
+      "Ground loop earth resistance testing and diagnostics",
+      "15+ years service life with zero degradation",
+      "Saves space over traditional salt/charcoal pits"
+    ]
+  },
+  {
+    "id": "preventive-maintenance",
+    "slug": "preventive-maintenance",
+    "title": "Control Panel AMC & Maintenance",
+    "description": "Annual Maintenance Contracts (AMC) and preventive maintenance designed to minimize downtime in continuous process industries.",
+    "features": [
+      "Scheduled relay calibration and terminal tightening checks",
+      "Vacuum circuit breaker (VCB) maintenance and lubrication",
+      "24x7 priority support deployment for grid trip emergencies",
+      "Capacitor health checks and MPP replacements"
+    ]
+  }
+]

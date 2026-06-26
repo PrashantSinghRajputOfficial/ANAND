@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-industrial-bg: #FFFFFF;
+  --color-industrial-card: #F8FAFC;
+  --color-industrial-primary: #F97316;
+  --color-industrial-accent: #0F172A;
+  --color-industrial-cyan: #EA580C;
+  --color-industrial-muted: #475569;
+  --color-industrial-white: #0F172A;
+
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-industrial-bg);
+    color: var(--color-industrial-white);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Diagonal Slants for the Top Header */
+.topbar-left-slant {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 25px) 100%, 0 100%);
+}
+
+.topbar-right-slant {
+  clip-path: polygon(25px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #EA580C;
+}

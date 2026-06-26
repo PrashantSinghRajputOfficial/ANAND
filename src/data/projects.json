@@ -1,0 +1,41 @@
+[
+  {
+    "id": "high-voltage-substation",
+    "slug": "high-voltage-substation",
+    "title": "Turnkey 132kV Substation Deployment",
+    "clientName": "Gujarat Heavy Chemicals Ltd",
+    "location": "Gujarat, India",
+    "scope": "Design, engineering, supply, testing, and commissioning of a turnkey 132kV industrial substation, including power transformers, custom HT control panels, outdoor switchyards, and lightning protection systems.",
+    "completionYear": "2025",
+    "challenges": "The site was located in a coastal region with high saline atmospheric corrosion. Cable paths had to be rerouted under critical groundwater levels without structural seepage.",
+    "solutions": "Utilized hot-dip galvanized structural steel towers and high-grade IP65 SS316 control cabinets. Installed advanced polyurethane water-tight cable sealing blocks at all gland entry plates.",
+    "results": "Substation successfully charged 30 days ahead of schedule, enabling the factory's new production block to commence operations smoothly.",
+    "image": "project_substation.png"
+  },
+  {
+    "id": "automated-manufacturing-grid",
+    "slug": "automated-manufacturing-grid",
+    "title": "Automated Automotive Manufacturing Grid",
+    "clientName": "Mahindra Auto Corp",
+    "location": "Maharashtra, India",
+    "scope": "Installation of complex Motor Control Centers (MCC), dual-input PLC synchronization switchboards, automated SCADA software integration, and copper busbar routing across paint shop and assembly line motors.",
+    "completionYear": "2024",
+    "challenges": "Continuous automated assembly lines had zero tolerance for power interruptions. Grid modifications had to be performed during scheduled 48-hour weekend line shutdowns.",
+    "solutions": "Pre-fabricated all MCC drawers and busbar runs offsite. Performed extensive pre-delivery FAT checks at our facility, enabling on-site plug-and-play assembly.",
+    "results": "Zero shutdown extension. The paint shop line automation achieved a 99.8% energy-efficiency index through smart PLC coordination.",
+    "image": "project_panelboard.png"
+  },
+  {
+    "id": "hospital-redundancy-system",
+    "slug": "hospital-redundancy-system",
+    "title": "Medical Facility Power Redundancy Grid",
+    "clientName": "Max Healthcare specialty Tower",
+    "location": "Jaipur, Rajasthan",
+    "scope": "Engineering and commissioning of automatic transfer AMF panels, clean-line medical isolation panels, and a low-impedance chemical grounding grid for critical life support surgical suites.",
+    "completionYear": "2024",
+    "challenges": "Ventilator units and MRI equipment require continuous current supply. Transition lag between mains power failure and generator backup had to be restricted below 8 seconds.",
+    "solutions": "Configured dual-motorized changeover circuit breakers controlled by high-speed Deep Sea PLC logic. Installed chemical copper-bonded electrodes maintaining ground impedance at 0.7 Ohms.",
+    "results": "Tested grid switchover transition is accomplished in 5.4 seconds. Grounding profiles completely filter transient noise, ensuring high-fidelity operation of MRI scanners.",
+    "image": "project_hospital.png"
+  }
+]
