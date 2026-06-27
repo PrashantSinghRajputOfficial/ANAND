@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageBanner from '../components/sections/PageBanner';
 import CTASection from '../components/sections/CTASection';
-import productsData from '../data/products.json';
+import { db } from '../utils/db';
 import { FaChevronRight } from 'react-icons/fa';
+
+const productsData = db.getProducts();
 
 export default function Products() {
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import projectsData from '../data/projects.json';
+import { db } from '../utils/db';
 import PageBanner from '../components/sections/PageBanner';
 import ContactForm from '../components/sections/ContactForm';
 import { FaChevronRight, FaCalendarAlt, FaMapMarkerAlt, FaUserAlt } from 'react-icons/fa';
@@ -16,6 +16,7 @@ export default function ProjectDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const projectsData = db.getProjects();
     const foundProject = projectsData.find(proj => proj.slug === slug);
     setProduct(foundProject);
     setLoading(false);
@@ -23,6 +24,8 @@ export default function ProjectDetails() {
   }, [slug]);
 
   const getImage = (imgName) => {
+    if (!imgName) return panelboardImg;
+    if (imgName.startsWith('http') || imgName.startsWith('data:') || imgName.startsWith('/')) return imgName;
     if (imgName === 'project_substation.png') return substationImg;
     if (imgName === 'project_panelboard.png') return panelboardImg;
     return panelboardImg;

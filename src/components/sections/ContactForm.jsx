@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { db } from '../../utils/db';
 
 export default function ContactForm({ presetService = "" }) {
   const [formData, setFormData] = useState({
@@ -21,7 +22,16 @@ export default function ContactForm({ presetService = "" }) {
     e.preventDefault();
     setSubmitting(true);
     
-    // Simulate API request using axios or setTimeout mock
+    // Save to local storage simulated db
+    db.addInquiry({
+      name: formData.name,
+      company: formData.company,
+      email: formData.email,
+      phone: formData.phone,
+      service: formData.service || presetService,
+      message: formData.message
+    });
+    
     setTimeout(() => {
       setSubmitting(false);
       setSuccess(true);
@@ -34,7 +44,7 @@ export default function ContactForm({ presetService = "" }) {
         message: ''
       });
       setTimeout(() => setSuccess(false), 4000);
-    }, 1500);
+    }, 1200);
   };
 
   return (

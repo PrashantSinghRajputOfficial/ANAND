@@ -2,36 +2,34 @@ import React, { useState } from 'react';
 import PageBanner from '../components/sections/PageBanner';
 import CTASection from '../components/sections/CTASection';
 import { FaBriefcase, FaUpload } from 'react-icons/fa';
+import { db } from '../utils/db';
 
 export default function Careers() {
-  const jobs = [
-    {
-      title: "Senior Electrical Commissioning Engineer",
-      location: "Jaipur (On-site travel)",
-      type: "Full-Time",
-      reqs: "B.Tech/Diploma in Electrical Engineering with 4+ years validating HT substations or MCC panel commissioning."
-    },
-    {
-      title: "Estimation & Proposals Engineer",
-      location: "Jaipur HQ",
-      type: "Full-Time",
-      reqs: "2+ years reading electrical drawings and preparing BOM bills of materials for industrial tender bids."
-    }
-  ];
+  const jobs = db.getJobs();
 
-  const [form, setForm] = useState({ name: '', email: '', phone: '', cv: null });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', position: jobs[0]?.title || 'General Application', cvName: '' });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitting(true);
+    
+    // Save application to DB
+    db.addApplication({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || 'N/A',
+      jobTitle: form.position,
+      cvName: form.cvName || 'resume_uploaded.pdf'
+    });
+
     setTimeout(() => {
       setSubmitting(false);
       setSuccess(true);
-      setForm({ name: '', email: '', phone: '', cv: null });
+      setForm({ name: '', email: '', phone: '', position: jobs[0]?.title || 'General Application', cvName: '' });
       setTimeout(() => setSuccess(false), 4000);
-    }, 1500);
+    }, 1200);
   };
 
   return (
@@ -86,6 +84,19 @@ export default function Careers() {
 
               <form onSubmit={handleSubmit} className="space-y-4 text-xs">
                 <div className="flex flex-col gap-2">
+                  <label className="font-semibold text-slate-500 uppercase tracking-wider">Position</label>
+                  <select
+                    value={form.position}
+                    onChange={(e) => setForm({ ...form, position: e.target.value })}
+                    className="bg-white border border-slate-200 rounded px-3 py-2.5 outline-none focus:border-industrial-cyan text-slate-900 cursor-pointer"
+                  >
+                    {jobs.map((job) => (
+                      <option key={job.id || job.title} value={job.title}>{job.title}</option>
+                    ))}
+                    <option value="General Application">General / Other Positions</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-2">
                   <label className="font-semibold text-slate-500 uppercase tracking-wider">Name</label>
                   <input 
                     type="text" 
@@ -108,11 +119,29 @@ export default function Careers() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
+                  <label className="font-semibold text-slate-500 uppercase tracking-wider">Phone</label>
+                  <input 
+                    type="tel" 
+                    required 
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="bg-white border border-slate-200 rounded px-3 py-2.5 outline-none focus:border-industrial-cyan text-slate-900" 
+                    placeholder="+91 98765 43210"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
                   <label className="font-semibold text-slate-500 uppercase tracking-wider">Resume Upload</label>
-                  <div className="border border-dashed border-slate-350 hover:border-industrial-cyan rounded p-4 text-center cursor-pointer relative group flex flex-col justify-center items-center bg-white">
+                  <div className="border border-dashed border-slate-300 hover:border-industrial-cyan rounded p-4 text-center cursor-pointer relative group flex flex-col justify-center items-center bg-white">
                     <FaUpload className="text-industrial-cyan mb-2 group-hover:scale-110 transition-transform" />
-                    <span className="text-[10px] text-slate-500">Drag or click to choose PDF</span>
-                    <input type="file" required className="absolute inset-0 opacity-0 cursor-pointer" />
+                    <span className="text-[10px] text-slate-500">
+                      {form.cvName ? `Selected: ${form.cvName}` : "Drag or click to choose PDF"}
+                    </span>
+                    <input 
+                      type="file" 
+                      required={!form.cvName}
+                      onChange={(e) => setForm({ ...form, cvName: e.target.files[0]?.name || '' })}
+                      className="absolute inset-0 opacity-0 cursor-pointer" 
+                    />
                   </div>
                 </div>
 

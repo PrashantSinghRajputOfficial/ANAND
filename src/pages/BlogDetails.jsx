@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import blogsData from '../data/blogs.json';
+import { db } from '../utils/db';
 import PageBanner from '../components/sections/PageBanner';
 import { FaChevronRight, FaCalendarAlt, FaUser, FaClock } from 'react-icons/fa';
 import NotFound from './NotFound';
@@ -9,6 +9,7 @@ export default function BlogDetails() {
   const { slug } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
+  const blogsData = db.getBlogs();
 
   useEffect(() => {
     const foundBlog = blogsData.find(b => b.slug === slug);

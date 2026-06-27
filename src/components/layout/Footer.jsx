@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaLinkedin, FaTwitter, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import productsData from '../../data/products.json';
+import { db } from '../../utils/db';
 import logoImg from '../../assets/logo.png';
+
+const productsData = db.getProducts();
 
 export default function Footer() {
   return (
@@ -121,7 +123,7 @@ export default function Footer() {
         <div className="flex gap-6">
           <a href="#" className="hover:text-industrial-cyan transition-colors">Privacy Policy</a>
           <a href="#" className="hover:text-industrial-cyan transition-colors">Terms of Service</a>
-          <a href="#" className="hover:text-industrial-cyan transition-colors">Sitemap</a>
+          <Link to="/admin" className="text-slate-405 hover:text-industrial-cyan font-semibold transition-colors">Admin Portal</Link>
         </div>
       </div>
     </footer>

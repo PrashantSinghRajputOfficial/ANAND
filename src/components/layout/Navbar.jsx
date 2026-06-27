@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaChevronDown, FaEnvelope, FaPhoneAlt, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import productsData from '../../data/products.json';
-import servicesData from '../../data/services.json';
+import { db } from '../../utils/db';
 import logoImg from '../../assets/logo.png';
+
+const productsData = db.getProducts();
+const servicesData = db.getServices();
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -68,6 +70,7 @@ export default function Navbar() {
 
         {/* Right segment with social media links */}
         <div className="flex items-center gap-4 pr-6 md:pr-12 h-full z-10">
+          <Link to="/admin" className="text-slate-400 hover:text-white transition-colors border-r border-slate-800 pr-4 mr-1">Admin Login</Link>
           <span className="text-slate-400 font-medium">Follow Us:</span>
           <div className="flex items-center gap-3.5">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-industrial-cyan transition-colors" aria-label="Facebook">

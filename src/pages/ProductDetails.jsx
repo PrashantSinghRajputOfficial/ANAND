@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import productsData from '../data/products.json';
+import { db } from '../utils/db';
 import PageBanner from '../components/sections/PageBanner';
 import ContactForm from '../components/sections/ContactForm';
 import { FaFilePdf, FaCheck, FaIndustry, FaChevronRight } from 'react-icons/fa';
@@ -12,6 +12,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const productsData = db.getProducts();
     const foundProduct = productsData.find(prod => prod.slug === slug);
     setProduct(foundProduct);
     setLoading(false);

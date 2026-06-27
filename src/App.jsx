@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 // Layout components
 import Navbar from './components/layout/Navbar';
@@ -23,44 +23,65 @@ import Careers from './pages/Careers';
 import Contact from './pages/Contact';
 import Downloads from './pages/Downloads';
 import Quote from './pages/Quote';
+import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
+
+function AppContent() {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  if (isAdmin) {
+    return (
+      <main className="min-h-screen bg-slate-50">
+        <Routes>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+    );
+  }
+
+  return (
+    <div className="bg-industrial-bg text-industrial-white font-body min-h-screen flex flex-col justify-between">
+      {/* Sticky Header */}
+      <Navbar />
+
+      {/* Main Content Area */}
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/leadership" element={<Leadership />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:slug" element={<ProductDetails />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:slug" element={<ProjectDetails />} />
+          <Route path="/industries" element={<Industries />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:slug" element={<BlogDetails />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/downloads" element={<Downloads />} />
+          <Route path="/quote" element={<Quote />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+
+      {/* Mega Footer */}
+      <Footer />
+
+      {/* Floating Communication Widgets */}
+      <FloatingWidgets />
+    </div>
+  );
+}
 
 function App() {
   return (
     <Router>
-      <div className="bg-industrial-bg text-industrial-white font-body min-h-screen flex flex-col justify-between">
-        {/* Sticky Header */}
-        <Navbar />
-
-        {/* Main Content Area */}
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/leadership" element={<Leadership />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:slug" element={<ProductDetails />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:slug" element={<ProjectDetails />} />
-            <Route path="/industries" element={<Industries />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/blogs/:slug" element={<BlogDetails />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/downloads" element={<Downloads />} />
-            <Route path="/quote" element={<Quote />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-
-        {/* Mega Footer */}
-        <Footer />
-
-        {/* Floating Communication Widgets */}
-        <FloatingWidgets />
-      </div>
+      <AppContent />
     </Router>
   );
 }

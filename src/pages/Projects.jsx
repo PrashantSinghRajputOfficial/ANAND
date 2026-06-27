@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageBanner from '../components/sections/PageBanner';
 import CTASection from '../components/sections/CTASection';
-import projectsData from '../data/projects.json';
+import { db } from '../utils/db';
 import { FaChevronRight } from 'react-icons/fa';
+
+const projectsData = db.getProjects();
 
 // Import Assets
 import substationImg from '../assets/project_substation.png';
@@ -11,6 +13,8 @@ import panelboardImg from '../assets/project_panelboard.png';
 
 export default function Projects() {
   const getImage = (imgName) => {
+    if (!imgName) return panelboardImg;
+    if (imgName.startsWith('http') || imgName.startsWith('data:') || imgName.startsWith('/')) return imgName;
     if (imgName === 'project_substation.png') return substationImg;
     if (imgName === 'project_panelboard.png') return panelboardImg;
     // Fallback/Default image

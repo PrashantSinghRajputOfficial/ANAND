@@ -10,9 +10,10 @@ import Testimonials from '../components/sections/Testimonials';
 import CTASection from '../components/sections/CTASection';
 
 // Import Data Modules
-import productsData from '../data/products.json';
-import projectsData from '../data/projects.json';
-import servicesData from '../data/services.json';
+import { db } from '../utils/db';
+const productsData = db.getProducts();
+const projectsData = db.getProjects();
+const servicesData = db.getServices();
 
 // Import Assets
 import directorImg from '../assets/director.png';

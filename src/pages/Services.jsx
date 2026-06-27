@@ -1,8 +1,10 @@
 import React from 'react';
 import PageBanner from '../components/sections/PageBanner';
 import CTASection from '../components/sections/CTASection';
-import servicesData from '../data/services.json';
+import { db } from '../utils/db';
 import { FaCheckCircle, FaTools, FaWrench, FaBolt, FaHistory } from 'react-icons/fa';
+
+const servicesData = db.getServices();
 
 export default function Services() {
   const getIcon = (id) => {
