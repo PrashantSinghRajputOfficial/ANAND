@@ -6,7 +6,7 @@ import {
   FaInbox, FaFileAlt, FaBriefcase, FaSignOutAlt, FaPlus, 
   FaEdit, FaTrash, FaExternalLinkAlt, FaCheck, FaTimes, 
   FaSearch, FaFilter, FaInfoCircle, FaCalendarAlt, FaUser, 
-  FaPhoneAlt, FaEnvelope, FaExclamationTriangle, FaEye
+  FaPhoneAlt, FaEnvelope, FaExclamationTriangle, FaEye, FaWhatsapp
 } from 'react-icons/fa';
 
 export default function Admin() {
@@ -579,11 +579,11 @@ function ProductsTab() {
     setName('');
     setShortDesc('');
     setDesc('');
-    setSpecs([{ name: 'Control Module', value: 'Deep Sea / SmartGen Controller' }, { name: 'Rated Voltage', value: '415V AC' }]);
-    setFeatures(['Auto-start and auto-stop sequencing', 'Emergency stop system']);
-    setApps(['Industrial Plant Standby Power', 'Hospitals']);
-    setImage('https://www.anandelectricals.in/product/AMF-Control-Panel.jpg');
-    setCatalog('panel-catalog.pdf');
+    setSpecs([{ name: '', value: '' }]);
+    setFeatures(['']);
+    setApps(['']);
+    setImage('');
+    setCatalog('');
     setView('form');
   };
 
@@ -994,7 +994,7 @@ function ProductsTab() {
 function ProjectsTab() {
   const [projects, setProjects] = useState([]);
   const [search, setSearch] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
+  const [view, setView] = useState('list'); // 'list', 'form'
   const [editProject, setEditProject] = useState(null);
 
   // Form states
@@ -1006,7 +1006,14 @@ function ProjectsTab() {
   const [challenges, setChallenges] = useState('');
   const [solutions, setSolutions] = useState('');
   const [results, setResults] = useState('');
-  const [image, setImage] = useState('');
+  const [images, setImages] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const [imageUrlInput, setImageUrlInput] = useState('');
+  const [videoUrlInput, setVideoUrlInput] = useState('');
+
+  // Drag & Drop states
+  const [isDragOverImage, setIsDragOverImage] = useState(false);
+  const [isDragOverVideo, setIsDragOverVideo] = useState(false);
 
   const loadProjects = () => {
     setProjects(db.getProjects());
@@ -1016,23 +1023,26 @@ function ProjectsTab() {
     loadProjects();
   }, []);
 
-  const openAddModal = () => {
+  const openAddForm = () => {
     setEditProject(null);
     setTitle('');
     setClient('');
     setLocation('');
-    setYear('2026');
+    setYear('');
     setScope('');
     setChallenges('');
     setSolutions('');
     setResults('');
-    setImage('project_panelboard.png');
-    setModalOpen(true);
+    setImages([]);
+    setVideos([]);
+    setImageUrlInput('');
+    setVideoUrlInput('');
+    setView('form');
   };
 
-  const openEditModal = (p) => {
+  const openEditForm = (p) => {
     setEditProject(p);
-    setTitle(p.title);
+    setTitle(p.title || '');
     setClient(p.clientName || '');
     setLocation(p.location || '');
     setYear(p.completionYear || '');
@@ -1040,12 +1050,20 @@ function ProjectsTab() {
     setChallenges(p.challenges || '');
     setSolutions(p.solutions || '');
     setResults(p.results || '');
-    setImage(p.image || '');
-    setModalOpen(true);
+    
+    // Backward compatibility for existing data
+    const imgs = p.images ? [...p.images] : (p.image ? [p.image] : []);
+    const vids = p.videos ? [...p.videos] : (p.videoUrl ? [p.videoUrl] : []);
+    
+    setImages(imgs);
+    setVideos(vids);
+    setImageUrlInput('');
+    setVideoUrlInput('');
+    setView('form');
   };
 
   const handleDelete = (id) => {
-    if (confirm('Delete this case study report?')) {
+    if (confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
       db.deleteProject(id);
       loadProjects();
     }
@@ -1062,7 +1080,11 @@ function ProjectsTab() {
       challenges,
       solutions,
       results,
-      image
+      images,
+      videos,
+      // Store first image and video as single values for legacy pages support
+      image: images[0] || '',
+      videoUrl: videos[0] || ''
     };
 
     if (editProject) {
@@ -1071,14 +1093,398 @@ function ProjectsTab() {
     }
 
     db.saveProject(payload);
-    setModalOpen(false);
+    setView('list');
     loadProjects();
+  };
+
+  // Drag & Drop handlers for multiple images
+  const handleImagesDrop = (e) => {
+    e.preventDefault();
+    setIsDragOverImage(false);
+    const files = Array.from(e.dataTransfer.files);
+    files.forEach(file => {
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImages(prev => [...prev, reader.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+
+  // Drag & Drop handlers for multiple videos
+  const handleVideosDrop = (e) => {
+    e.preventDefault();
+    setIsDragOverVideo(false);
+    const files = Array.from(e.dataTransfer.files);
+    files.forEach(file => {
+      if (file && file.type.startsWith('video/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setVideos(prev => [...prev, reader.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+
+  // File Select handlers for multiple images
+  const handleImagesSelect = (e) => {
+    const files = Array.from(e.target.files);
+    files.forEach(file => {
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImages(prev => [...prev, reader.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+
+  // File Select handlers for multiple videos
+  const handleVideosSelect = (e) => {
+    const files = Array.from(e.target.files);
+    files.forEach(file => {
+      if (file && file.type.startsWith('video/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setVideos(prev => [...prev, reader.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+
+  const addImageUrl = () => {
+    if (imageUrlInput.trim()) {
+      setImages(prev => [...prev, imageUrlInput.trim()]);
+      setImageUrlInput('');
+    }
+  };
+
+  const addVideoUrl = () => {
+    if (videoUrlInput.trim()) {
+      setVideos(prev => [...prev, videoUrlInput.trim()]);
+      setVideoUrlInput('');
+    }
   };
 
   const filtered = projects.filter(p => 
     p.title.toLowerCase().includes(search.toLowerCase()) || 
     (p.clientName && p.clientName.toLowerCase().includes(search.toLowerCase()))
   );
+
+  if (view === 'form') {
+    return (
+      <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
+        <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+          <h3 className="font-heading font-bold text-lg text-slate-905">
+            {editProject ? 'Edit Project Details' : 'Project Add (Naya Project)'}
+          </h3>
+          <button 
+            type="button"
+            onClick={() => setView('list')} 
+            className="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded text-slate-600 font-semibold cursor-pointer text-xs uppercase"
+          >
+            ← Cancel (Wapas)
+          </button>
+        </div>
+
+        <form onSubmit={handleSave} className="space-y-6 text-xs text-slate-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="space-y-1.5">
+              <label className="font-semibold text-slate-550 uppercase tracking-wider block">Project Title</label>
+              <input 
+                type="text" 
+                required 
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g. Turnkey 132kV Substation Setup"
+                className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-805"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="font-semibold text-slate-550 uppercase tracking-wider block">Client Name</label>
+              <input 
+                type="text" 
+                required 
+                value={client}
+                onChange={(e) => setClient(e.target.value)}
+                placeholder="e.g. Tata Projects Ltd"
+                className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-805"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="space-y-1.5">
+              <label className="font-semibold text-slate-550 uppercase tracking-wider block">Location (State/City)</label>
+              <input 
+                type="text" 
+                required 
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="e.g. Jaipur, Rajasthan"
+                className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-805"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="font-semibold text-slate-550 uppercase tracking-wider block">Completion Year</label>
+              <input 
+                type="text" 
+                required 
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                placeholder="e.g. 2026"
+                className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-805"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="font-semibold text-slate-550 uppercase tracking-wider block">Project Scope</label>
+            <textarea 
+              rows="3" 
+              required
+              value={scope}
+              onChange={(e) => setScope(e.target.value)}
+              placeholder="Outline the scope of contracting execution..."
+              className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-805 resize-none"
+            ></textarea>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-slate-100 pt-4">
+            {/* Image Upload Zone */}
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <label className="font-semibold text-slate-550 uppercase tracking-wider block">Project Images ({images.length})</label>
+                {images.length > 0 && (
+                  <button 
+                    type="button" 
+                    onClick={() => setImages([])} 
+                    className="text-red-500 hover:text-red-700 font-semibold text-[10px] uppercase cursor-pointer"
+                  >
+                    Clear All
+                  </button>
+                )}
+              </div>
+              
+              <div 
+                onDragOver={(e) => { e.preventDefault(); setIsDragOverImage(true); }}
+                onDragLeave={() => setIsDragOverImage(false)}
+                onDrop={handleImagesDrop}
+                className={`border-2 border-dashed rounded-xl p-6 text-center transition-all ${
+                  isDragOverImage ? 'border-orange-500 bg-orange-50/50' : 'border-slate-200 bg-slate-50 hover:bg-slate-100/50'
+                }`}
+              >
+                <div className="space-y-2">
+                  <div className="text-slate-400 font-medium">Drag & drop project images here, or</div>
+                  <label className="inline-block px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded text-[10px] font-bold uppercase cursor-pointer transition-all shadow-sm">
+                    Browse Files
+                    <input 
+                      type="file" 
+                      multiple
+                      accept="image/*" 
+                      onChange={handleImagesSelect} 
+                      className="hidden" 
+                    />
+                  </label>
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={imageUrlInput}
+                  onChange={(e) => setImageUrlInput(e.target.value)}
+                  placeholder="Paste Image URL here (e.g. https://example.com/img.jpg)"
+                  className="flex-grow bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-2.5 py-1 text-slate-805 text-[11px]"
+                />
+                <button 
+                  type="button" 
+                  onClick={addImageUrl} 
+                  className="px-3 py-1 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded text-[10px] uppercase cursor-pointer"
+                >
+                  Add URL
+                </button>
+              </div>
+
+              {images.length > 0 && (
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-64 overflow-y-auto p-2 border border-slate-100 rounded-lg bg-slate-50/50">
+                  {images.map((img, index) => (
+                    <div key={index} className="relative group aspect-square rounded-lg overflow-hidden border border-slate-200 bg-white">
+                      <img src={img} alt={`Preview ${index}`} className="w-full h-full object-cover" />
+                      <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button 
+                          type="button" 
+                          onClick={() => setImages(prev => prev.filter((_, i) => i !== index))}
+                          className="p-1 bg-red-600 text-white hover:bg-red-700 rounded-full shadow cursor-pointer flex items-center justify-center"
+                        >
+                          <FaTimes size={10} />
+                        </button>
+                      </div>
+                      <div className="absolute bottom-1 left-1 bg-black/60 text-white text-[9px] px-1 rounded font-mono">
+                        #{index + 1}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Video Upload Zone */}
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <label className="font-semibold text-slate-550 uppercase tracking-wider block">Project Videos ({videos.length})</label>
+                {videos.length > 0 && (
+                  <button 
+                    type="button" 
+                    onClick={() => setVideos([])} 
+                    className="text-red-500 hover:text-red-700 font-semibold text-[10px] uppercase cursor-pointer"
+                  >
+                    Clear All
+                  </button>
+                )}
+              </div>
+              
+              <div 
+                onDragOver={(e) => { e.preventDefault(); setIsDragOverVideo(true); }}
+                onDragLeave={() => setIsDragOverVideo(false)}
+                onDrop={handleVideosDrop}
+                className={`border-2 border-dashed rounded-xl p-6 text-center transition-all ${
+                  isDragOverVideo ? 'border-orange-500 bg-orange-50/50' : 'border-slate-200 bg-slate-50 hover:bg-slate-100/50'
+                }`}
+              >
+                <div className="space-y-2">
+                  <div className="text-slate-400 font-medium">Drag & drop project videos here (MP4/WebM), or</div>
+                  <label className="inline-block px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded text-[10px] font-bold uppercase cursor-pointer transition-all shadow-sm">
+                    Browse Files
+                    <input 
+                      type="file" 
+                      multiple
+                      accept="video/*" 
+                      onChange={handleVideosSelect} 
+                      className="hidden" 
+                    />
+                  </label>
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={videoUrlInput}
+                  onChange={(e) => setVideoUrlInput(e.target.value)}
+                  placeholder="Paste Video URL / YouTube URL here"
+                  className="flex-grow bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-2.5 py-1 text-slate-805 text-[11px]"
+                />
+                <button 
+                  type="button" 
+                  onClick={addVideoUrl} 
+                  className="px-3 py-1 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded text-[10px] uppercase cursor-pointer"
+                >
+                  Add URL
+                </button>
+              </div>
+
+              {videos.length > 0 && (
+                <div className="space-y-2 max-h-64 overflow-y-auto p-2 border border-slate-100 rounded-lg bg-slate-50/50">
+                  {videos.map((vid, index) => {
+                    const isYoutube = vid.includes('youtube.com') || vid.includes('youtu.be');
+                    return (
+                      <div key={index} className="flex items-center gap-3 p-2 bg-white rounded border border-slate-200 relative group">
+                        <div className="w-16 h-12 bg-slate-950 rounded overflow-hidden flex-shrink-0 flex items-center justify-center">
+                          {isYoutube ? (
+                            <span className="text-red-600 text-[10px] font-bold font-mono">YouTube</span>
+                          ) : (
+                            <video src={vid} className="w-full h-full object-cover" />
+                          )}
+                        </div>
+                        <div className="flex-grow text-[10px] font-mono truncate text-slate-650 max-w-[150px] sm:max-w-xs">
+                          {vid}
+                        </div>
+                        <div className="flex-shrink-0">
+                          <button 
+                            type="button" 
+                            onClick={() => setVideos(prev => prev.filter((_, i) => i !== index))}
+                            className="p-1.5 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 rounded transition-all cursor-pointer"
+                            title="Remove Video"
+                          >
+                            <FaTrash size={10} />
+                          </button>
+                        </div>
+                        <div className="absolute top-1 left-1 bg-black/60 text-white text-[8px] px-1 rounded font-mono">
+                          #{index + 1}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-4 border-t border-slate-100 pt-4">
+            <h5 className="font-heading font-semibold text-slate-900 uppercase tracking-wider text-xs">Technical Case File Details</h5>
+            
+            <div className="space-y-3.5">
+              <div className="space-y-1.5">
+                <label className="font-semibold text-slate-505 uppercase tracking-wider block">The Challenge</label>
+                <textarea 
+                  rows="2.5" 
+                  required
+                  value={challenges}
+                  onChange={(e) => setChallenges(e.target.value)}
+                  placeholder="Specify environmental, physical or synchronization hurdles faced at site..."
+                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850 resize-none"
+                ></textarea>
+              </div>
+              <div className="space-y-1.5">
+                <label className="font-semibold text-slate-505 uppercase tracking-wider block">The Solution</label>
+                <textarea 
+                  rows="2.5" 
+                  required
+                  value={solutions}
+                  onChange={(e) => setSolutions(e.target.value)}
+                  placeholder="Detail switchgear sizing, busbar configurations or custom engineering applied..."
+                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850 resize-none"
+                ></textarea>
+              </div>
+              <div className="space-y-1.5">
+                <label className="font-semibold text-slate-505 uppercase tracking-wider block">The Result</label>
+                <textarea 
+                  rows="2" 
+                  required
+                  value={results}
+                  onChange={(e) => setResults(e.target.value)}
+                  placeholder="e.g. Grid commissioned 15 days ahead. Slashed current feedback loop limits..."
+                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850 resize-none"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-100 pt-5 flex justify-end gap-3">
+            <button 
+              type="button" 
+              onClick={() => setView('list')}
+              className="px-4 py-2 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-550 rounded font-semibold transition-all cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit"
+              className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded font-semibold transition-all cursor-pointer shadow-md shadow-orange-600/10"
+            >
+              {editProject ? 'Save Changes' : 'Project Add'}
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
@@ -1089,18 +1495,18 @@ function ProjectsTab() {
           </span>
           <input 
             type="text" 
-            placeholder="Search case studies..."
+            placeholder="Search projects..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-200/80 focus:bg-white focus:border-orange-500 outline-none rounded-lg pl-9 pr-4 py-2 text-xs text-slate-800 transition-all"
+            className="w-full bg-slate-50 border border-slate-200/80 focus:bg-white focus:border-orange-500 outline-none rounded-lg pl-9 pr-4 py-2 text-xs text-slate-805 transition-all"
           />
         </div>
 
         <button 
-          onClick={openAddModal}
+          onClick={openAddForm}
           className="w-full sm:w-auto px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg text-xs transition-all tracking-wider uppercase font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-orange-600/10"
         >
-          <FaPlus size={10} /> Register Case Study
+          <FaPlus size={10} /> Project Add
         </button>
       </div>
 
@@ -1108,17 +1514,17 @@ function ProjectsTab() {
         <table className="w-full text-left border-collapse text-xs">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200/80 text-slate-500 font-semibold font-heading uppercase tracking-wider">
-              <th className="px-6 py-4">Case Study / Client</th>
+              <th className="px-6 py-4">Project / Client</th>
               <th className="px-6 py-4">Scope Summary</th>
               <th className="px-6 py-4">Location & Year</th>
               <th className="px-6 py-4 w-32">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-slate-600">
+          <tbody className="divide-y divide-slate-100 text-slate-650">
             {filtered.length === 0 ? (
               <tr>
                 <td colSpan="4" className="text-center py-12 text-slate-400">
-                  No case studies registered yet.
+                  No projects registered yet.
                 </td>
               </tr>
             ) : (
@@ -1141,22 +1547,22 @@ function ProjectsTab() {
                       <Link 
                         to={`/projects/${p.slug}`} 
                         target="_blank"
-                        className="p-1.5 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 rounded text-slate-500 hover:text-slate-800 transition-all"
+                        className="p-1.5 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 rounded text-slate-550 hover:text-slate-805 transition-all"
                         title="View details page"
                       >
                         <FaExternalLinkAlt size={10} />
                       </Link>
                       <button 
-                        onClick={() => openEditModal(p)}
-                        className="p-1.5 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 rounded text-slate-500 hover:text-blue-600 transition-all cursor-pointer"
+                        onClick={() => openEditForm(p)}
+                        className="p-1.5 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 rounded text-slate-550 hover:text-blue-600 transition-all cursor-pointer"
                         title="Edit Details"
                       >
                         <FaEdit size={10} />
                       </button>
                       <button 
                         onClick={() => handleDelete(p.id)}
-                        className="p-1.5 border border-slate-200 hover:border-red-300 hover:bg-red-50 rounded text-slate-500 hover:text-red-600 transition-all cursor-pointer"
-                        title="Delete Case Study"
+                        className="p-1.5 border border-slate-200 hover:border-red-300 hover:bg-red-50 rounded text-slate-550 hover:text-red-650 transition-all cursor-pointer"
+                        title="Delete Project"
                       >
                         <FaTrash size={10} />
                       </button>
@@ -1168,154 +1574,6 @@ function ProjectsTab() {
           </tbody>
         </table>
       </div>
-
-      {modalOpen && (
-        <div className="fixed inset-0 bg-slate-950/55 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <div className="bg-white border border-slate-200 rounded-xl max-w-3xl w-full max-h-[85vh] overflow-y-auto shadow-2xl relative">
-            <div className="absolute top-0 left-0 w-full h-[3px] bg-orange-600"></div>
-            
-            <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100">
-              <h4 className="font-heading font-bold text-base text-slate-900">
-                {editProject ? 'Edit Case File Specs' : 'Document New Site Handover'}
-              </h4>
-              <button onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-600 cursor-pointer">
-                <FaTimes size={16} />
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="p-6 space-y-6 text-xs text-slate-700">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-1.5">
-                  <label className="font-semibold text-slate-550 uppercase tracking-wider block">Project Title</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="e.g. Turnkey 132kV Substation Setup"
-                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="font-semibold text-slate-550 uppercase tracking-wider block">Client Name</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={client}
-                    onChange={(e) => setClient(e.target.value)}
-                    placeholder="e.g. Tata Projects Ltd"
-                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div className="space-y-1.5">
-                  <label className="font-semibold text-slate-550 uppercase tracking-wider block">Location (State/City)</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    placeholder="e.g. Jaipur, Rajasthan"
-                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="font-semibold text-slate-550 uppercase tracking-wider block">Completion Year</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                    placeholder="e.g. 2026"
-                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="font-semibold text-slate-550 uppercase tracking-wider block">Banner Image reference / Link</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="project_panelboard.png or URL link"
-                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="font-semibold text-slate-550 uppercase tracking-wider block">Project Scope</label>
-                <textarea 
-                  rows="3" 
-                  required
-                  value={scope}
-                  onChange={(e) => setScope(e.target.value)}
-                  placeholder="Outline the scope of contracting execution..."
-                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800 resize-none"
-                ></textarea>
-              </div>
-
-              <div className="space-y-4 border-t border-slate-100 pt-4">
-                <h5 className="font-heading font-semibold text-slate-900 uppercase tracking-wider text-xs">Technical Case File</h5>
-                
-                <div className="space-y-3">
-                  <div className="space-y-1.5">
-                    <label className="font-semibold text-slate-505 uppercase tracking-wider block">The Challenge</label>
-                    <textarea 
-                      rows="2.5" 
-                      required
-                      value={challenges}
-                      onChange={(e) => setChallenges(e.target.value)}
-                      placeholder="Specify environmental, physical or synchronization hurdles faced at site..."
-                      className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800 resize-none"
-                    ></textarea>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="font-semibold text-slate-505 uppercase tracking-wider block">The Solution</label>
-                    <textarea 
-                      rows="2.5" 
-                      required
-                      value={solutions}
-                      onChange={(e) => setSolutions(e.target.value)}
-                      placeholder="Detail switchgear sizing, busbar configurations or custom engineering applied..."
-                      className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800 resize-none"
-                    ></textarea>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="font-semibold text-slate-505 uppercase tracking-wider block">The Result</label>
-                    <textarea 
-                      rows="2" 
-                      required
-                      value={results}
-                      onChange={(e) => setResults(e.target.value)}
-                      placeholder="e.g. Grid commissioned 15 days ahead. Slashed current feedback loop limits..."
-                      className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800 resize-none"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-slate-100 pt-5 flex justify-end gap-3">
-                <button 
-                  type="button" 
-                  onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-550 rounded font-semibold transition-all cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit"
-                  className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded font-semibold transition-all cursor-pointer shadow-md shadow-orange-600/10"
-                >
-                  {editProject ? 'Apply Alterations' : 'Publish Case File'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -1969,11 +2227,31 @@ function InquiriesTab() {
 
             {/* Profile fields */}
             <div className="space-y-3.5 bg-slate-50 border border-slate-200/60 rounded-xl p-4">
-              <div className="flex items-center gap-2.5">
-                <FaPhoneAlt className="text-orange-500 flex-shrink-0" />
-                <span className="text-[11px] font-medium text-slate-805">{selectedInquiry.phone}</span>
+              <div className="flex flex-wrap gap-y-3 gap-x-2 items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <FaPhoneAlt className="text-orange-500 flex-shrink-0" />
+                  <span className="text-[12px] font-bold text-slate-800">{selectedInquiry.phone}</span>
+                </div>
+                <div className="flex gap-2">
+                  <a 
+                    href={`tel:${selectedInquiry.phone}`} 
+                    className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm shadow-blue-500/10 cursor-pointer text-center"
+                    title="Call Client"
+                  >
+                    <FaPhoneAlt size={8} /> Call
+                  </a>
+                  <a 
+                    href={`https://wa.me/${selectedInquiry.phone.replace(/[^0-9]/g, '').length === 10 ? '91' + selectedInquiry.phone.replace(/[^0-9]/g, '') : selectedInquiry.phone.replace(/[^0-9]/g, '')}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm shadow-green-500/10 cursor-pointer text-center"
+                    title="WhatsApp Chat"
+                  >
+                    <FaWhatsapp size={9} /> WhatsApp
+                  </a>
+                </div>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 border-t border-slate-200/50 pt-2.5">
                 <FaEnvelope className="text-orange-500 flex-shrink-0" />
                 <a href={`mailto:${selectedInquiry.email}`} className="text-[11px] font-medium text-orange-600 hover:underline">{selectedInquiry.email}</a>
               </div>

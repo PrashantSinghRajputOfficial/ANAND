@@ -14,11 +14,34 @@ export default function ProjectDetails() {
   const { slug } = useParams();
   const [project, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mediaList, setMediaList] = useState([]);
+  const [activeMedia, setActiveMedia] = useState(null);
 
   useEffect(() => {
     const projectsData = db.getProjects();
     const foundProject = projectsData.find(proj => proj.slug === slug);
-    setProduct(foundProject);
+    if (foundProject) {
+      setProduct(foundProject);
+      
+      const imgs = foundProject.images ? [...foundProject.images] : (foundProject.image ? [foundProject.image] : []);
+      const vids = foundProject.videos ? [...foundProject.videos] : (foundProject.videoUrl ? [foundProject.videoUrl] : []);
+      
+      const list = [];
+      vids.forEach(v => {
+        if (v) list.push({ type: 'video', url: v });
+      });
+      imgs.forEach(i => {
+        if (i) list.push({ type: 'image', url: i });
+      });
+      
+      // Fallback if empty
+      if (list.length === 0) {
+        list.push({ type: 'image', url: 'project_panelboard.png' });
+      }
+      
+      setMediaList(list);
+      setActiveMedia(list[0] || null);
+    }
     setLoading(false);
     window.scrollTo(0, 0);
   }, [slug]);
@@ -67,15 +90,106 @@ export default function ProjectDetails() {
           {/* Main Content Column */}
           <div className="lg:col-span-8 space-y-10">
             
-            {/* Main Visual Image */}
-            <div className="w-full h-80 md:h-[450px] rounded-xl overflow-hidden border border-slate-200 shadow-lg relative">
-              <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent z-10"></div>
-              <img 
-                src={getImage(project.image)} 
-                alt={project.title} 
-                className="w-full h-full object-cover scale-101"
-              />
+            {/* Main Visual Media */}
+            <div className="w-full rounded-xl overflow-hidden border border-slate-200 shadow-lg relative bg-slate-950">
+              {activeMedia ? (
+                activeMedia.type === 'video' ? (
+                  (() => {
+                    const isYoutube = activeMedia.url.includes('youtube.com') || activeMedia.url.includes('youtu.be');
+                    if (isYoutube) {
+                      let embedUrl = activeMedia.url;
+                      if (activeMedia.url.includes('watch?v=')) {
+                        const id = activeMedia.url.split('watch?v=')[1].split('&')[0];
+                        embedUrl = `https://www.youtube.com/embed/${id}`;
+                      } else if (activeMedia.url.includes('youtu.be/')) {
+                        const id = activeMedia.url.split('youtu.be/')[1].split('?')[0];
+                        embedUrl = `https://www.youtube.com/embed/${id}`;
+                      }
+                      return (
+                        <div className="aspect-video w-full max-h-[450px]">
+                          <iframe 
+                            src={embedUrl}
+                            title={project.title}
+                            className="w-full h-full border-0"
+                            allowFullScreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div className="aspect-video w-full max-h-[450px]">
+                          <video 
+                            src={activeMedia.url} 
+                            controls 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      );
+                    }
+                  })()
+                ) : (
+                  <div className="w-full h-80 md:h-[450px] relative">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none"></div>
+                    <img 
+                      src={getImage(activeMedia.url)} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover scale-101"
+                    />
+                  </div>
+                )
+              ) : (
+                <div className="w-full h-80 md:h-[450px] relative">
+                  <img 
+                    src={panelboardImg} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
             </div>
+
+            {/* Media Gallery Thumbnails Selector */}
+            {mediaList.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-slate-200">
+                {mediaList.map((media, index) => {
+                  const isSelected = activeMedia && activeMedia.url === media.url;
+                  const isYoutube = media.type === 'video' && (media.url.includes('youtube.com') || media.url.includes('youtu.be'));
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setActiveMedia(media)}
+                      className={`relative flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                        isSelected ? 'border-orange-500 scale-105 shadow-md' : 'border-slate-200 hover:border-slate-400'
+                      }`}
+                    >
+                      {media.type === 'video' ? (
+                        <div className="w-full h-full bg-slate-950 flex items-center justify-center relative">
+                          {isYoutube ? (
+                            <span className="text-red-500 font-mono text-[9px] font-bold">YouTube</span>
+                          ) : (
+                            <video src={media.url} className="w-full h-full object-cover opacity-60" />
+                          )}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-6 h-6 rounded-full bg-white/80 flex items-center justify-center text-slate-900 shadow">
+                              <svg className="w-3 h-3 fill-current ml-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <img 
+                          src={getImage(media.url)} 
+                          alt={`Thumbnail ${index}`} 
+                          className="w-full h-full object-cover" 
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Scope details */}
             <div className="space-y-4">
