@@ -73,13 +73,18 @@ export default function FloatingWidgets() {
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
+  const chatBodyRef = useRef(null);
 
   const primaryPhone = '+919694700750';
   const whatsappMessage = 'Hello Anand Electricals, I would like to inquire about your industrial electrical panels and contracting services.';
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTo({
+        top: chatBodyRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
@@ -259,7 +264,7 @@ export default function FloatingWidgets() {
             </div>
 
             {/* Chat Body */}
-            <div className="flex-grow p-4 overflow-y-auto bg-slate-50 space-y-4 text-xs font-body">
+            <div ref={chatBodyRef} className="flex-grow p-4 overflow-y-auto bg-slate-50 space-y-4 text-xs font-body">
               {messages.map((msg, index) => (
                 <div 
                   key={index} 
@@ -284,7 +289,7 @@ export default function FloatingWidgets() {
                   </div>
                 </div>
               )}
-              <div ref={messagesEndRef} />
+
             </div>
 
             {/* Suggestion Chips */}

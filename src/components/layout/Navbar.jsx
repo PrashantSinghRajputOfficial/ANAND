@@ -181,16 +181,7 @@ export default function Navbar() {
                 Industries
               </Link>
             </li>
-            <li>
-              <Link to="/blogs" className={`hover:text-industrial-cyan transition-colors ${isActive('/blogs')}`}>
-                Insights
-              </Link>
-            </li>
-            <li>
-              <Link to="/careers" className={`hover:text-industrial-cyan transition-colors ${isActive('/careers')}`}>
-                Careers
-              </Link>
-            </li>
+
           </ul>
         </nav>
 
@@ -297,16 +288,7 @@ export default function Navbar() {
                 Industries
               </Link>
             </li>
-            <li>
-              <Link to="/blogs" className={location.pathname.startsWith('/blogs') ? 'text-industrial-cyan' : 'text-industrial-muted'}>
-                Insights
-              </Link>
-            </li>
-            <li>
-              <Link to="/careers" className={location.pathname.startsWith('/careers') ? 'text-industrial-cyan' : 'text-industrial-muted'}>
-                Careers
-              </Link>
-            </li>
+
             <li className="pt-4 border-t border-slate-100">
               <Link to="/quote" className="flex justify-center py-3 bg-industrial-cyan text-white font-semibold rounded-md uppercase text-center text-sm font-heading shadow-md shadow-industrial-cyan/10">
                 Get Free Consultation

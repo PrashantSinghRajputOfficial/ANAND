@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { db } from '../../utils/db';
 
 export default function ContactForm({ presetService = "" }) {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const queryProduct = searchParams.get('product') || searchParams.get('service') || '';
+
   const [formData, setFormData] = useState({
     name: '',
     company: '',
     email: '',
     phone: '',
-    service: presetService,
+    service: presetService || queryProduct,
     message: ''
   });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    const qProd = searchParams.get('product') || searchParams.get('service') || '';
+    if (qProd) {
+      setFormData(prev => ({ ...prev, service: qProd }));
+    }
+  }, [location.search]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -47,6 +59,9 @@ export default function ContactForm({ presetService = "" }) {
     }, 1200);
   };
 
+  const productsList = db.getProducts();
+  const servicesList = db.getServices();
+
   return (
     <div className="bg-white border border-slate-200/80 rounded-2xl p-8 md:p-10 relative overflow-hidden shadow-lg">
       <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-industrial-cyan to-industrial-accent"></div>
@@ -55,7 +70,7 @@ export default function ContactForm({ presetService = "" }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
             <label htmlFor="name" className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Full Name
+              Aapka Naam (Full Name)
             </label>
             <input 
               type="text" 
@@ -69,7 +84,7 @@ export default function ContactForm({ presetService = "" }) {
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="company" className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Company Name
+              Company/Dukaan ka Naam (Company Name)
             </label>
             <input 
               type="text" 
@@ -77,7 +92,7 @@ export default function ContactForm({ presetService = "" }) {
               required 
               value={formData.company}
               onChange={handleChange}
-              placeholder="e.g. Tata Projects Ltd" 
+              placeholder="e.g. Tata Projects Ltd ya Shop Name" 
               className="bg-slate-50 border border-slate-200 focus:bg-white focus:border-industrial-cyan focus:ring-1 focus:ring-industrial-cyan/20 outline-none rounded-md px-4 py-3 text-sm text-slate-900 transition-all"
             />
           </div>
@@ -86,7 +101,7 @@ export default function ContactForm({ presetService = "" }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
             <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Corporate Email
+              Email Address
             </label>
             <input 
               type="email" 
@@ -100,7 +115,7 @@ export default function ContactForm({ presetService = "" }) {
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Mobile Number
+              Mobile Number (Phone)
             </label>
             <input 
               type="tel" 
@@ -116,7 +131,7 @@ export default function ContactForm({ presetService = "" }) {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="service" className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Required System
+            Kaunsa Board ya Samaan Chahiye? (Required System)
           </label>
           <select 
             id="service" 
@@ -125,21 +140,29 @@ export default function ContactForm({ presetService = "" }) {
             onChange={handleChange}
             className="bg-slate-50 border border-slate-200 focus:bg-white focus:border-industrial-cyan focus:ring-1 focus:ring-industrial-cyan/20 outline-none rounded-md px-4 py-3 text-sm text-slate-900 transition-all cursor-pointer"
           >
-            <option value="" className="bg-white text-slate-900" disabled>Select panel / system type</option>
-            <option value="plc" className="bg-white text-slate-900">PLC Control Panels</option>
-            <option value="apfc" className="bg-white text-slate-900">APFC Panels</option>
-            <option value="amf" className="bg-white text-slate-900">AMF Switchboards</option>
-            <option value="mcc" className="bg-white text-slate-900">Motor Control Centers (MCC)</option>
-            <option value="pcc" className="bg-white text-slate-900">Power Control Panels (PCC)</option>
-            <option value="busduct" className="bg-white text-slate-900">Busbar Trunking Systems</option>
-            <option value="earthing" className="bg-white text-slate-900">Earthing System Grounding</option>
-            <option value="turnkey" className="bg-white text-slate-900">Turnkey Electrification Setup</option>
+            <option value="" className="bg-white text-slate-900" disabled>Samaan ya Service select karein</option>
+            
+            <optgroup label="Products (Samaan)" className="bg-white font-semibold text-slate-500">
+              {productsList.map(p => (
+                <option key={p.id} value={p.id} className="bg-white text-slate-900">
+                  {p.name}
+                </option>
+              ))}
+            </optgroup>
+
+            <optgroup label="Services (Kaam)" className="bg-white font-semibold text-slate-500">
+              {servicesList.map(s => (
+                <option key={s.id} value={s.id} className="bg-white text-slate-900">
+                  {s.title}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </div>
 
         <div className="flex flex-col gap-2">
           <label htmlFor="message" className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Project Load Specifications / Scope
+            Apni Zarurat/Kaam Likhein (Describe requirement)
           </label>
           <textarea 
             id="message" 
@@ -147,7 +170,7 @@ export default function ContactForm({ presetService = "" }) {
             required
             value={formData.message}
             onChange={handleChange}
-            placeholder="Describe load capacities, environmental conditions, site configurations, or regulatory targets..." 
+            placeholder="Aapko kaisa board chahiye, kitni power chahiye, details likhein..." 
             className="bg-slate-50 border border-slate-200 focus:bg-white focus:border-industrial-cyan focus:ring-1 focus:ring-industrial-cyan/20 outline-none rounded-md px-4 py-3 text-sm text-slate-900 transition-all resize-none"
           ></textarea>
         </div>
@@ -157,12 +180,12 @@ export default function ContactForm({ presetService = "" }) {
           disabled={submitting}
           className="w-full py-4 bg-industrial-cyan text-white hover:bg-slate-900 font-bold rounded-md text-sm transition-all duration-300 tracking-wider uppercase font-heading disabled:opacity-50 shadow-md shadow-industrial-cyan/10"
         >
-          {submitting ? 'Transmitting Data...' : 'Submit Request'}
+          {submitting ? 'Bhej rahe hain...' : 'Humse Bhao/Price Poochhein'}
         </button>
 
         {success && (
           <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 rounded-md text-center text-xs font-semibold">
-            Data Transmitted Successfully. Our contracting engineer will contact you within 24 hours.
+            Message bhej diya gaya hai! Hum aapse jaldi baat karenge. (Submit Successful!)
           </div>
         )}
       </form>

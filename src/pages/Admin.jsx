@@ -56,7 +56,6 @@ export default function Admin() {
           {activeTab === 'products' && <ProductsTab />}
           {activeTab === 'projects' && <ProjectsTab />}
           {activeTab === 'services' && <ServicesTab />}
-          {activeTab === 'blogs' && <BlogsTab />}
           {activeTab === 'inquiries' && <InquiriesTab />}
           {activeTab === 'applications' && <ApplicationsTab />}
           {activeTab === 'jobs' && <JobsTab />}
@@ -173,12 +172,9 @@ function Sidebar({ activeTab, setActiveTab, user, onLogout }) {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
     { id: 'products', label: 'Products', icon: <FaBoxOpen /> },
-    { id: 'projects', label: 'Case Studies', icon: <FaBuilding /> },
+    { id: 'projects', label: 'Project', icon: <FaBuilding /> },
     { id: 'services', label: 'Services', icon: <FaCogs /> },
-    { id: 'blogs', label: 'Blogs/Insights', icon: <FaNewspaper /> },
-    { id: 'inquiries', label: 'Inquiries', icon: <FaInbox />, countKey: 'inquiries' },
-    { id: 'applications', label: 'Applications', icon: <FaFileAlt />, countKey: 'applications' },
-    { id: 'jobs', label: 'Careers/Jobs', icon: <FaBriefcase /> },
+    { id: 'inquiries', label: 'Inquiries', icon: <FaInbox />, countKey: 'inquiries' }
   ];
 
   const getUnreadCount = (key) => {
@@ -298,12 +294,10 @@ function Topbar({ activeTab, user, onLogout }) {
     switch (activeTab) {
       case 'dashboard': return 'Dashboard Overview';
       case 'products': return 'Hardware & Products Catalog';
-      case 'projects': return 'Client Case Studies';
+      case 'projects': return 'Project Management';
       case 'services': return 'Contracting Services';
       case 'blogs': return 'Blogs & Technical Guides';
       case 'inquiries': return 'Inquiries Box';
-      case 'applications': return 'Recruitment Submissions';
-      case 'jobs': return 'Active Vacancies';
       default: return 'Control Center';
     }
   };
@@ -344,22 +338,104 @@ function Topbar({ activeTab, user, onLogout }) {
 /* ==========================================================================
    TAB: DASHBOARD OVERVIEW
    ========================================================================== */
+function VisitorStatsCard() {
+  const [visitorFilter, setVisitorFilter] = useState('Today'); // 'Today', '7Days', 'Month'
+  
+  // Mock visitor data
+  const visitorLogs = [
+    { id: 1, time: '10:42 AM', ip: '192.168.1.45', page: '/', device: 'Mobile', date: '2026-07-01' },
+    { id: 2, time: '10:15 AM', ip: '103.45.12.98', page: '/products/apfc-panel', device: 'Desktop', date: '2026-07-01' },
+    { id: 3, time: '09:30 AM', ip: '157.23.45.11', page: '/services', device: 'Mobile', date: '2026-07-01' },
+    { id: 4, time: 'Yesterday', ip: '182.12.90.34', page: '/', device: 'Desktop', date: '2026-06-30' },
+    { id: 5, time: 'Yesterday', ip: '45.112.33.22', page: '/about', device: 'Desktop', date: '2026-06-30' },
+    { id: 6, time: '3 Days Ago', ip: '203.44.11.89', page: '/products/ht-lt-panel', device: 'Mobile', date: '2026-06-28' },
+    { id: 7, time: '5 Days Ago', ip: '98.12.34.56', page: '/contact', device: 'Desktop', date: '2026-06-26' },
+    { id: 8, time: '10 Days Ago', ip: '102.34.89.12', page: '/', device: 'Mobile', date: '2026-06-21' },
+    { id: 9, time: '12 Days Ago', ip: '150.12.34.56', page: '/products/dg-set-panel', device: 'Desktop', date: '2026-06-19' },
+    { id: 10, time: '20 Days Ago', ip: '185.34.12.90', page: '/services', device: 'Desktop', date: '2026-06-11' }
+  ];
+
+  const getFilteredLogs = () => {
+    if (visitorFilter === 'Today') {
+      return visitorLogs.filter(log => log.date === '2026-07-01');
+    }
+    if (visitorFilter === '7Days') {
+      return visitorLogs.filter(log => new Date(log.date) >= new Date('2026-06-25'));
+    }
+    return visitorLogs;
+  };
+
+  const filteredLogs = getFilteredLogs();
+
+  return (
+    <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
+      <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+        <h3 className="font-heading font-bold text-base text-slate-900">
+          Visitor Statistics (Log Column)
+        </h3>
+        
+        <select
+          value={visitorFilter}
+          onChange={(e) => setVisitorFilter(e.target.value)}
+          className="bg-slate-50 border border-slate-200 rounded px-2 py-1 text-xs text-slate-705 cursor-pointer outline-none focus:border-orange-500 font-semibold"
+        >
+          <option value="Today">Today (Aaj)</option>
+          <option value="7Days">Last 7 Days (7 Din)</option>
+          <option value="Month">Monthly (Mahina)</option>
+        </select>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 text-center font-mono">
+        <div className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
+          <span className="text-[9px] text-slate-400 uppercase font-semibold block">Today</span>
+          <span className="text-sm font-bold text-slate-800">142</span>
+        </div>
+        <div className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
+          <span className="text-[9px] text-slate-400 uppercase font-semibold block">7 Days</span>
+          <span className="text-sm font-bold text-slate-800">1,024</span>
+        </div>
+        <div className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
+          <span className="text-[9px] text-slate-400 uppercase font-semibold block">Monthly</span>
+          <span className="text-sm font-bold text-slate-800">4,512</span>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
+          Visitor Log
+        </span>
+        <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+          {filteredLogs.map((log) => (
+            <div key={log.id} className="p-2.5 bg-slate-50 border border-slate-200/50 rounded-lg flex justify-between items-center text-[10px] font-mono text-slate-500">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-semibold text-slate-700">{log.ip}</span>
+                  <span className="px-1 py-0.2 bg-slate-200 text-slate-600 rounded-sm text-[8px] font-sans font-semibold">{log.device}</span>
+                </div>
+                <span className="block text-slate-400 font-sans">Visited: <strong className="text-orange-600">{log.page}</strong></span>
+              </div>
+              <span className="text-slate-400 whitespace-nowrap">{log.time}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DashboardTab({ setActiveTab }) {
   const products = db.getProducts();
   const projects = db.getProjects();
   const services = db.getServices();
-  const blogs = db.getBlogs();
   const inquiries = db.getInquiries();
-  const applications = db.getApplications();
-  const jobs = db.getJobs();
 
   const metrics = [
     { label: 'Total Products', value: products.length, icon: <FaBoxOpen />, tab: 'products' },
-    { label: 'Case Studies', value: projects.length, icon: <FaBuilding />, tab: 'projects' },
+    { label: 'Project', value: projects.length, icon: <FaBuilding />, tab: 'projects' },
     { label: 'Active Services', value: services.length, icon: <FaCogs />, tab: 'services' },
     { label: 'Inquiries Box', value: inquiries.length, icon: <FaInbox />, tab: 'inquiries', highlight: inquiries.filter(i => i.status === 'Pending').length },
-    { label: 'Applications', value: applications.length, icon: <FaFileAlt />, tab: 'applications', highlight: applications.filter(a => a.status === 'Pending').length },
-    { label: 'Vacancies', value: jobs.length, icon: <FaBriefcase />, tab: 'jobs' }
+    { label: 'Visitors (Today)', value: 142, icon: <FaEye />, tab: 'dashboard' },
+    { label: 'Visitors (Monthly)', value: 4512, icon: <FaEye />, tab: 'dashboard' }
   ];
 
   const recentInquiries = inquiries.slice(0, 5);
@@ -383,15 +459,15 @@ function DashboardTab({ setActiveTab }) {
         {metrics.map((m, idx) => (
           <button 
             key={idx}
-            onClick={() => setActiveTab(m.tab)}
-            className="bg-white border border-slate-200/80 hover:border-slate-300 rounded-xl p-5 text-left transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md cursor-pointer flex flex-col justify-between h-36 group"
+            onClick={() => m.tab !== 'dashboard' && setActiveTab(m.tab)}
+            className="bg-white border border-slate-200/80 hover:border-slate-350 rounded-xl p-5 text-left transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md cursor-pointer flex flex-col justify-between h-36 group"
           >
             <div className="flex items-center justify-between w-full">
-              <span className="p-3 rounded-lg text-slate-500 bg-slate-50 border border-slate-100 group-hover:text-orange-650 transition-colors">
+              <span className="p-3 rounded-lg text-slate-555 bg-slate-50 border border-slate-100 group-hover:text-orange-600 transition-colors">
                 {m.icon}
               </span>
               {m.highlight > 0 && (
-                <span className="bg-red-550 text-white font-mono text-[9px] px-1.5 py-0.5 rounded-full font-bold animate-pulse">
+                <span className="bg-red-500 text-white font-mono text-[9px] px-1.5 py-0.5 rounded-full font-bold animate-pulse">
                   {m.highlight} NEW
                 </span>
               )}
@@ -425,7 +501,7 @@ function DashboardTab({ setActiveTab }) {
 
           <div className="space-y-4">
             {recentInquiries.length === 0 ? (
-              <div className="text-center py-12 text-slate-550 text-sm">
+              <div className="text-center py-12 text-slate-500 text-sm">
                 No recent inquiries received.
               </div>
             ) : (
@@ -433,10 +509,10 @@ function DashboardTab({ setActiveTab }) {
                 <div key={inq.id} className="p-4 bg-slate-50 border border-slate-200/60 hover:bg-slate-100/50 rounded-xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-slate-905 text-sm">{inq.name}</span>
+                      <span className="font-semibold text-slate-900 text-sm">{inq.name}</span>
                       <span className="text-[10px] text-slate-400 font-medium font-mono">• {inq.company}</span>
                     </div>
-                    <p className="text-slate-600 text-xs leading-relaxed line-clamp-1">{inq.message}</p>
+                    <p className="text-slate-605 text-xs leading-relaxed line-clamp-1">{inq.message}</p>
                     <span className="text-[10px] text-slate-400 block font-medium">
                       Date: {new Date(inq.date).toLocaleString()}
                     </span>
@@ -445,7 +521,7 @@ function DashboardTab({ setActiveTab }) {
                   <div className="flex items-center gap-3 justify-end">
                     <span className={`
                       text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider border
-                      ${inq.status === 'Pending' ? 'bg-orange-50 text-orange-605 border-orange-200/40' : ''}
+                      ${inq.status === 'Pending' ? 'bg-orange-50 text-orange-600 border-orange-200/40' : ''}
                       ${inq.status === 'Contacted' ? 'bg-blue-50 text-blue-600 border-blue-200/40' : ''}
                       ${inq.status === 'Resolved' ? 'bg-emerald-50 text-emerald-600 border-emerald-200/40' : ''}
                     `}>
@@ -453,7 +529,7 @@ function DashboardTab({ setActiveTab }) {
                     </span>
                     <button 
                       onClick={() => setActiveTab('inquiries')}
-                      className="p-1.5 border border-slate-205 hover:border-slate-350 hover:bg-white text-slate-500 hover:text-slate-800 rounded transition-all cursor-pointer"
+                      className="p-1.5 border border-slate-200 hover:border-slate-350 hover:bg-white text-slate-555 hover:text-slate-800 rounded transition-all cursor-pointer"
                       title="Inspect Inquiry"
                     >
                       <FaEye size={12} />
@@ -465,68 +541,19 @@ function DashboardTab({ setActiveTab }) {
           </div>
         </div>
 
-        {/* System Diagnostics Card */}
-        <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
-          <h3 className="font-heading font-bold text-base text-slate-900 border-b border-slate-100 pb-4">
-            System Operations
-          </h3>
-
-          <div className="space-y-5 text-xs text-slate-600">
-            <div className="space-y-2">
-              <div className="flex justify-between font-medium">
-                <span>Database Allocation (Local)</span>
-                <span className="font-semibold text-slate-800">4.8 KB / 5 MB (0.1%)</span>
-              </div>
-              <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden border border-slate-200/40">
-                <div className="bg-orange-500 h-1.5 rounded-full" style={{ width: '0.1%' }}></div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between font-medium">
-                <span>Active API Threads</span>
-                <span className="font-semibold text-emerald-605 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
-                  Active
-                </span>
-              </div>
-            </div>
-
-            <div className="border-t border-slate-100 pt-4 space-y-3 font-mono text-[10px]">
-              <div className="flex justify-between">
-                <span className="text-slate-400 uppercase">Gateway Version</span>
-                <span className="text-slate-800 font-semibold">AGY-V2.6-LITE</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400 uppercase">Schema Verification</span>
-                <span className="text-emerald-600 font-bold">COMPLIANT</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400 uppercase">Session Hash</span>
-                <span className="text-slate-700">AES-256-GCM-OK</span>
-              </div>
-            </div>
-
-            <div className="p-4 bg-slate-50 border border-slate-200/60 rounded-lg flex gap-3">
-              <FaInfoCircle className="text-orange-500 text-lg flex-shrink-0 mt-0.5" />
-              <p className="text-[10px] text-slate-500 leading-relaxed">
-                All records, edits, and deletions are saved immediately inside the browser's persistent sandbox. To sync with a cloud back-end, plug in your server REST endpoint inside the axios adapter.
-              </p>
-            </div>
-          </div>
-        </div>
+        {/* Visitor Stats Card Column */}
+        <VisitorStatsCard />
       </div>
     </div>
   );
 }
-
 /* ==========================================================================
    TAB: PRODUCTS MANAGEMENT
    ========================================================================== */
 function ProductsTab() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
+  const [view, setView] = useState('list'); // 'list', 'form'
   const [editProduct, setEditProduct] = useState(null);
 
   // Form states
@@ -547,7 +574,7 @@ function ProductsTab() {
     loadProducts();
   }, []);
 
-  const openAddModal = () => {
+  const openAddForm = () => {
     setEditProduct(null);
     setName('');
     setShortDesc('');
@@ -557,10 +584,10 @@ function ProductsTab() {
     setApps(['Industrial Plant Standby Power', 'Hospitals']);
     setImage('https://www.anandelectricals.in/product/AMF-Control-Panel.jpg');
     setCatalog('panel-catalog.pdf');
-    setModalOpen(true);
+    setView('form');
   };
 
-  const openEditModal = (p) => {
+  const openEditForm = (p) => {
     setEditProduct(p);
     setName(p.name);
     setShortDesc(p.shortDescription || '');
@@ -570,7 +597,7 @@ function ProductsTab() {
     setApps(p.applications || ['']);
     setImage(p.image || '');
     setCatalog(p.catalogName || '');
-    setModalOpen(true);
+    setView('form');
   };
 
   const handleDelete = (id) => {
@@ -599,7 +626,7 @@ function ProductsTab() {
     }
 
     db.saveProduct(productPayload);
-    setModalOpen(false);
+    setView('list');
     loadProducts();
   };
 
@@ -608,9 +635,260 @@ function ProductsTab() {
     (p.shortDescription && p.shortDescription.toLowerCase().includes(search.toLowerCase()))
   );
 
+  if (view === 'form') {
+    return (
+      <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
+        <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+          <h3 className="font-heading font-bold text-lg text-slate-905">
+            {editProduct ? 'Edit Product Details' : 'Add New Product'}
+          </h3>
+          <button 
+            type="button"
+            onClick={() => setView('list')} 
+            className="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded text-slate-600 font-semibold cursor-pointer text-xs uppercase"
+          >
+            ← Cancel (Wapas)
+          </button>
+        </div>
+
+        <form onSubmit={handleSave} className="space-y-6 text-xs text-slate-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="space-y-1.5">
+              <label className="font-semibold text-slate-500 uppercase tracking-wider block">Product Name (Samaan ka Naam)</label>
+              <input 
+                type="text" 
+                required 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. AMF Control Panel"
+                className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="font-semibold text-slate-500 uppercase tracking-wider block">Catalog PDF File Name</label>
+              <input 
+                type="text" 
+                value={catalog}
+                onChange={(e) => setCatalog(e.target.value)}
+                placeholder="e.g. catalog.pdf"
+                className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+              />
+            </div>
+          </div>
+
+          {/* Dual Image Input */}
+          <div className="space-y-1.5 bg-slate-50 p-4 border border-slate-200/60 rounded-xl">
+            <label className="font-semibold text-slate-600 uppercase tracking-wider block mb-2">Product Image (Photo Link ya Upload)</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] text-slate-400 font-medium block">Option 1: Net se Photo ka URL link daalein</span>
+                <input 
+                  type="text" 
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                  placeholder="e.g. https://website.com/photo.jpg"
+                  className="w-full bg-white border border-slate-200 outline-none focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+                />
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] text-slate-400 font-medium block">Option 2: Apni computer se Photo file upload karein</span>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setImage(reader.result); // Base64 data URL
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  className="w-full bg-white border border-slate-200 outline-none rounded px-3 py-1.5 text-slate-800"
+                />
+              </div>
+            </div>
+            {image && (
+              <div className="mt-3">
+                <span className="text-[10px] text-slate-400 font-medium block mb-1">Image Preview:</span>
+                <img src={image} alt="Preview" className="h-20 w-auto object-contain border border-slate-200 rounded p-1 bg-white" />
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="font-semibold text-slate-500 uppercase tracking-wider block">Short Summary (Ek line me Jankari)</label>
+            <input 
+              type="text" 
+              required 
+              value={shortDesc}
+              onChange={(e) => setShortDesc(e.target.value)}
+              placeholder="e.g. Custom-fabricated power distribution box."
+              className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="font-semibold text-slate-500 uppercase tracking-wider block">Full Details (Poori Jankari)</label>
+            <textarea 
+              rows="4" 
+              required
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              placeholder="Describe hardware details, busbar materials..."
+              className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800 resize-none font-body text-xs"
+            ></textarea>
+          </div>
+
+          {/* Specs Editor */}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+              <label className="font-semibold text-slate-900 uppercase tracking-wider">Technical Specifications (Samaan ki Naap/Details)</label>
+              <button 
+                type="button" 
+                onClick={() => setSpecs([...specs, { name: '', value: '' }])}
+                className="text-orange-600 hover:text-orange-700 font-semibold inline-flex items-center gap-1 cursor-pointer"
+              >
+                + Add row (Nayi line jodein)
+              </button>
+            </div>
+            <div className="space-y-2">
+              {specs.map((spec, index) => (
+                <div key={index} className="flex gap-3 items-center">
+                  <input 
+                    type="text" 
+                    placeholder="Spec Name (e.g. Busbar)" 
+                    value={spec.name}
+                    onChange={(e) => {
+                      const newSpecs = [...specs];
+                      newSpecs[index].name = e.target.value;
+                      setSpecs(newSpecs);
+                    }}
+                    className="w-1/2 bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-805"
+                  />
+                  <input 
+                    type="text" 
+                    placeholder="Value (e.g. Copper)" 
+                    value={spec.value}
+                    onChange={(e) => {
+                      const newSpecs = [...specs];
+                      newSpecs[index].value = e.target.value;
+                      setSpecs(newSpecs);
+                    }}
+                    className="w-1/2 bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-805"
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setSpecs(specs.filter((_, i) => i !== index))}
+                    className="text-red-500 hover:text-red-700 p-2 cursor-pointer"
+                  >
+                    <FaTrash size={10} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Features and Apps */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <div className="flex justify-between items-center border-b border-slate-105 pb-2">
+                <label className="font-semibold text-slate-900 uppercase tracking-wider">Features</label>
+                <button 
+                  type="button" 
+                  onClick={() => setFeatures([...features, ''])}
+                  className="text-orange-600 font-semibold cursor-pointer"
+                >
+                  + Add Feature
+                </button>
+              </div>
+              <div className="space-y-2">
+                {features.map((feat, index) => (
+                  <div key={index} className="flex gap-2 items-center">
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Powder coated finish" 
+                      value={feat}
+                      onChange={(e) => {
+                        const newFeats = [...features];
+                        newFeats[index] = e.target.value;
+                        setFeatures(newFeats);
+                      }}
+                      className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+                    />
+                    <button 
+                      type="button" 
+                      onClick={() => setFeatures(features.filter((_, i) => i !== index))}
+                      className="text-red-500 p-2 cursor-pointer"
+                    >
+                      <FaTrash size={10} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex justify-between items-center border-b border-slate-105 pb-2">
+                <label className="font-semibold text-slate-900 uppercase tracking-wider">Applications</label>
+                <button 
+                  type="button" 
+                  onClick={() => setApps([...apps, ''])}
+                  className="text-orange-600 font-semibold cursor-pointer"
+                >
+                  + Add Sector
+                </button>
+              </div>
+              <div className="space-y-2">
+                {apps.map((app, index) => (
+                  <div key={index} className="flex gap-2 items-center">
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Factories" 
+                      value={app}
+                      onChange={(e) => {
+                        const newApps = [...apps];
+                        newApps[index] = e.target.value;
+                        setApps(newApps);
+                      }}
+                      className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+                    />
+                    <button 
+                      type="button" 
+                      onClick={() => setApps(apps.filter((_, i) => i !== index))}
+                      className="text-red-500 p-2 cursor-pointer"
+                    >
+                      <FaTrash size={10} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-100 pt-5 flex justify-end gap-3">
+            <button 
+              type="button" 
+              onClick={() => setView('list')}
+              className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-550 rounded font-semibold transition-all cursor-pointer text-xs uppercase"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit"
+              className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded font-semibold transition-all cursor-pointer shadow-md shadow-orange-600/10 text-xs uppercase"
+            >
+              {editProduct ? 'Save Changes' : 'Register Product'}
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
-      {/* Header controls */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-5">
         <div className="relative w-full sm:max-w-xs">
           <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
@@ -621,19 +899,18 @@ function ProductsTab() {
             placeholder="Search products..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-55 border border-slate-200/80 focus:bg-white focus:border-orange-500 outline-none rounded-lg pl-9 pr-4 py-2 text-xs text-slate-800 transition-all"
+            className="w-full bg-slate-50 border border-slate-200/80 focus:bg-white focus:border-orange-500 outline-none rounded-lg pl-9 pr-4 py-2 text-xs text-slate-800 transition-all"
           />
         </div>
 
         <button 
-          onClick={openAddModal}
+          onClick={openAddForm}
           className="w-full sm:w-auto px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg text-xs transition-all tracking-wider uppercase font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-orange-600/10"
         >
-          <FaPlus size={10} /> Add New Product
+          <FaPlus size={10} /> Add New Product (Samaan)
         </button>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
@@ -644,7 +921,7 @@ function ProductsTab() {
               <th className="px-6 py-4 w-32">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-105 text-slate-600">
+          <tbody className="divide-y divide-slate-100 text-slate-600">
             {filteredProducts.length === 0 ? (
               <tr>
                 <td colSpan="4" className="text-center py-12 text-slate-400">
@@ -680,21 +957,21 @@ function ProductsTab() {
                       <Link 
                         to={`/products/${p.slug}`} 
                         target="_blank"
-                        className="p-1.5 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 rounded text-slate-500 hover:text-slate-850 transition-all"
+                        className="p-1.5 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 rounded text-slate-555 hover:text-slate-800 transition-all"
                         title="View details page"
                       >
                         <FaExternalLinkAlt size={10} />
                       </Link>
                       <button 
-                        onClick={() => openEditModal(p)}
-                        className="p-1.5 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 rounded text-slate-500 hover:text-blue-600 transition-all cursor-pointer"
+                        onClick={() => openEditForm(p)}
+                        className="p-1.5 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 rounded text-slate-555 hover:text-blue-650 transition-all cursor-pointer"
                         title="Edit specifications"
                       >
                         <FaEdit size={10} />
                       </button>
                       <button 
                         onClick={() => handleDelete(p.id)}
-                        className="p-1.5 border border-slate-200 hover:border-red-300 hover:bg-red-50 rounded text-slate-500 hover:text-red-600 transition-all cursor-pointer"
+                        className="p-1.5 border border-slate-200 hover:border-red-300 hover:bg-red-50 rounded text-slate-555 hover:text-red-650 transition-all cursor-pointer"
                         title="Delete product"
                       >
                         <FaTrash size={10} />
@@ -707,233 +984,6 @@ function ProductsTab() {
           </tbody>
         </table>
       </div>
-
-      {/* Modal Form */}
-      {modalOpen && (
-        <div className="fixed inset-0 bg-slate-950/55 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <div className="bg-white border border-slate-205 rounded-xl max-w-3xl w-full max-h-[85vh] overflow-y-auto shadow-2xl relative">
-            <div className="absolute top-0 left-0 w-full h-[3px] bg-orange-600"></div>
-            
-            <div className="flex justify-between items-center px-6 py-4 border-b border-slate-105">
-              <h4 className="font-heading font-bold text-base text-slate-900">
-                {editProduct ? 'Edit Catalog Specifications' : 'Fabricate New Product Module'}
-              </h4>
-              <button onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-600 cursor-pointer">
-                <FaTimes size={16} />
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="p-6 space-y-6 text-xs text-slate-700">
-              {/* Product Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-1.5">
-                  <label className="font-semibold text-slate-500 uppercase tracking-wider block">Product Name</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. AMF Control Panel"
-                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="font-semibold text-slate-500 uppercase tracking-wider block">Image Source URL</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="Image link / CDN link"
-                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="font-semibold text-slate-505 uppercase tracking-wider block">Brief Summary (Short Description)</label>
-                <input 
-                  type="text" 
-                  required 
-                  value={shortDesc}
-                  onChange={(e) => setShortDesc(e.target.value)}
-                  placeholder="e.g. Custom-fabricated power distribution box with automatic changeover switchboards."
-                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-855"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="font-semibold text-slate-505 uppercase tracking-wider block">Full System Overview (Detailed Description)</label>
-                <textarea 
-                  rows="4" 
-                  required
-                  value={desc}
-                  onChange={(e) => setDesc(e.target.value)}
-                  placeholder="Describe hardware details, busbar materials, CPRI certifications, testing, etc..."
-                  className="w-full bg-slate-55 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850 resize-none font-body text-xs"
-                ></textarea>
-              </div>
-
-              {/* Specs Editor */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center border-b border-slate-100 pb-2">
-                  <label className="font-semibold text-slate-900 uppercase tracking-wider">Technical Specifications</label>
-                  <button 
-                    type="button" 
-                    onClick={() => setSpecs([...specs, { name: '', value: '' }])}
-                    className="text-orange-600 hover:text-orange-700 font-semibold inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    + Add row
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  {specs.map((spec, index) => (
-                    <div key={index} className="flex gap-3 items-center">
-                      <input 
-                        type="text" 
-                        placeholder="Spec Name (e.g., Rated current)" 
-                        value={spec.name}
-                        onChange={(e) => {
-                          const newSpecs = [...specs];
-                          newSpecs[index].name = e.target.value;
-                          setSpecs(newSpecs);
-                        }}
-                        className="w-1/2 bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850"
-                      />
-                      <input 
-                        type="text" 
-                        placeholder="Value (e.g., 800A)" 
-                        value={spec.value}
-                        onChange={(e) => {
-                          const newSpecs = [...specs];
-                          newSpecs[index].value = e.target.value;
-                          setSpecs(newSpecs);
-                        }}
-                        className="w-1/2 bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850"
-                      />
-                      <button 
-                        type="button" 
-                        onClick={() => setSpecs(specs.filter((_, i) => i !== index))}
-                        className="text-red-500 hover:text-red-700 p-2 cursor-pointer"
-                      >
-                        <FaTrash size={10} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tag editors */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Features */}
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center border-b border-slate-100 pb-2">
-                    <label className="font-semibold text-slate-900 uppercase tracking-wider">Features</label>
-                    <button 
-                      type="button" 
-                      onClick={() => setFeatures([...features, ''])}
-                      className="text-orange-600 font-semibold cursor-pointer"
-                    >
-                      + Add Feature
-                    </button>
-                  </div>
-                  <div className="space-y-2">
-                    {features.map((feat, index) => (
-                      <div key={index} className="flex gap-2 items-center">
-                        <input 
-                          type="text" 
-                          placeholder="e.g. Secondary injection logs provided" 
-                          value={feat}
-                          onChange={(e) => {
-                            const newFeats = [...features];
-                            newFeats[index] = e.target.value;
-                            setFeatures(newFeats);
-                          }}
-                          className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850"
-                        />
-                        <button 
-                          type="button" 
-                          onClick={() => setFeatures(features.filter((_, i) => i !== index))}
-                          className="text-red-500 p-2 cursor-pointer"
-                        >
-                          <FaTrash size={10} />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Applications */}
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center border-b border-slate-100 pb-2">
-                    <label className="font-semibold text-slate-900 uppercase tracking-wider">Applications</label>
-                    <button 
-                      type="button" 
-                      onClick={() => setApps([...apps, ''])}
-                      className="text-orange-600 font-semibold cursor-pointer"
-                    >
-                      + Add Sector
-                    </button>
-                  </div>
-                  <div className="space-y-2">
-                    {apps.map((app, index) => (
-                      <div key={index} className="flex gap-2 items-center">
-                        <input 
-                          type="text" 
-                          placeholder="e.g. Spinning Mills" 
-                          value={app}
-                          onChange={(e) => {
-                            const newApps = [...apps];
-                            newApps[index] = e.target.value;
-                            setApps(newApps);
-                          }}
-                          className="w-full bg-slate-55 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-850"
-                        />
-                        <button 
-                          type="button" 
-                          onClick={() => setApps(apps.filter((_, i) => i !== index))}
-                          className="text-red-500 p-2 cursor-pointer"
-                        >
-                          <FaTrash size={10} />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Extra files */}
-              <div className="space-y-1.5">
-                <label className="font-semibold text-slate-500 uppercase tracking-wider block">Technical Catalog PDF File Name</label>
-                <input 
-                  type="text" 
-                  value={catalog}
-                  onChange={(e) => setCatalog(e.target.value)}
-                  placeholder="e.g. product-spec-sheet.pdf"
-                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                />
-              </div>
-
-              {/* Submit */}
-              <div className="border-t border-slate-100 pt-5 flex justify-end gap-3">
-                <button 
-                  type="button" 
-                  onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-550 rounded font-semibold transition-all cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit"
-                  className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded font-semibold transition-all cursor-pointer shadow-md shadow-orange-600/10"
-                >
-                  {editProduct ? 'Apply Alterations' : 'Register Product Spec'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -1269,19 +1319,19 @@ function ProjectsTab() {
     </div>
   );
 }
-
 /* ==========================================================================
    TAB: SERVICES MANAGEMENT
    ========================================================================== */
 function ServicesTab() {
   const [services, setServices] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [view, setView] = useState('list'); // 'list', 'form'
   const [editService, setEditService] = useState(null);
 
-  // Form
+  // Form states
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [feats, setFeats] = useState(['']);
+  const [image, setImage] = useState('');
 
   const load = () => setServices(db.getServices());
 
@@ -1294,7 +1344,8 @@ function ServicesTab() {
     setTitle('');
     setDesc('');
     setFeats(['']);
-    setModalOpen(true);
+    setImage('');
+    setView('form');
   };
 
   const openEdit = (s) => {
@@ -1302,7 +1353,8 @@ function ServicesTab() {
     setTitle(s.title);
     setDesc(s.description || '');
     setFeats(s.features || ['']);
-    setModalOpen(true);
+    setImage(s.image || '');
+    setView('form');
   };
 
   const handleDelete = (id) => {
@@ -1317,7 +1369,8 @@ function ServicesTab() {
     const payload = {
       title,
       description: desc,
-      features: feats.filter(f => f.trim() !== '')
+      features: feats.filter(f => f.trim() !== ''),
+      image
     };
 
     if (editService) {
@@ -1326,19 +1379,159 @@ function ServicesTab() {
     }
 
     db.saveService(payload);
-    setModalOpen(false);
+    setView('list');
     load();
   };
+
+  if (view === 'form') {
+    return (
+      <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
+        <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+          <h3 className="font-heading font-bold text-lg text-slate-900">
+            {editService ? 'Edit Service Kaam' : 'Add New Service Kaam'}
+          </h3>
+          <button 
+            type="button"
+            onClick={() => setView('list')} 
+            className="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded text-slate-600 font-semibold cursor-pointer text-xs uppercase"
+          >
+            ← Cancel (Wapas)
+          </button>
+        </div>
+
+        <form onSubmit={handleSave} className="space-y-6 text-xs text-slate-700">
+          <div className="space-y-1.5">
+            <label className="font-semibold text-slate-500 uppercase tracking-wider block">Service Title (Kaam ka Naam)</label>
+            <input 
+              type="text" 
+              required 
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. Chemical Earthing"
+              className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+            />
+          </div>
+
+          {/* Dual Image Input */}
+          <div className="space-y-1.5 bg-slate-50 p-4 border border-slate-200/60 rounded-xl">
+            <label className="font-semibold text-slate-600 uppercase tracking-wider block mb-2">Service Image (Photo Link ya Upload)</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] text-slate-400 font-medium block">Option 1: Net se Photo ka URL link daalein</span>
+                <input 
+                  type="text" 
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                  placeholder="e.g. https://website.com/photo.jpg"
+                  className="w-full bg-white border border-slate-200 outline-none focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+                />
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] text-slate-400 font-medium block">Option 2: Apni computer se Photo file upload karein</span>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setImage(reader.result); // Base64 data URL
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  className="w-full bg-white border border-slate-200 outline-none rounded px-3 py-1.5 text-slate-800"
+                />
+              </div>
+            </div>
+            {image && (
+              <div className="mt-3">
+                <span className="text-[10px] text-slate-400 font-medium block mb-1">Image Preview:</span>
+                <img src={image} alt="Preview" className="h-20 w-auto object-contain border border-slate-200 rounded p-1 bg-white" />
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="font-semibold text-slate-500 uppercase tracking-wider block">Short Description (Details)</label>
+            <textarea 
+              rows="3" 
+              required
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              placeholder="Outline the focus and limits of this service..."
+              className="w-full bg-slate-55 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800 resize-none"
+            ></textarea>
+          </div>
+
+          {/* Features / Scope items */}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+              <label className="font-semibold text-slate-900 uppercase tracking-wider">Features / Scope items (Kaam ke details)</label>
+              <button 
+                type="button" 
+                onClick={() => setFeats([...feats, ''])}
+                className="text-orange-600 font-semibold cursor-pointer"
+              >
+                + Add row
+              </button>
+            </div>
+            <div className="space-y-2">
+              {feats.map((feat, index) => (
+                <div key={index} className="flex gap-2 items-center">
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 3D CAD modeling provided" 
+                    value={feat}
+                    onChange={(e) => {
+                      const newFeats = [...feats];
+                      newFeats[index] = e.target.value;
+                      setFeats(newFeats);
+                    }}
+                    className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setFeats(feats.filter((_, i) => i !== index))}
+                    className="text-red-500 p-2 cursor-pointer"
+                  >
+                    <FaTrash size={10} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-slate-100 pt-5 flex justify-end gap-3">
+            <button 
+              type="button" 
+              onClick={() => setView('list')}
+              className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 rounded font-semibold transition-all cursor-pointer text-xs uppercase"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit"
+              className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded font-semibold transition-all cursor-pointer shadow-md shadow-orange-600/10 text-xs uppercase"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm space-y-6">
       <div className="flex justify-between items-center border-b border-slate-100 pb-5">
-        <h3 className="font-heading font-bold text-base text-slate-900">Contracting Services Offered</h3>
+        <h3 className="font-heading font-bold text-base text-slate-900">Sevaayein (Contracting Services) Offered</h3>
         <button 
           onClick={openAdd}
           className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg text-xs transition-all tracking-wider uppercase font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-orange-600/10"
         >
-          <FaPlus size={10} /> Add New Service
+          <FaPlus size={10} /> Nayi Service Jodein (Add Service)
         </button>
       </div>
 
@@ -1357,14 +1550,20 @@ function ServicesTab() {
                   </button>
                   <button 
                     onClick={() => handleDelete(s.id)}
-                    className="p-1 border border-slate-200 hover:border-red-300 hover:bg-white text-slate-500 hover:text-red-600 rounded transition-all cursor-pointer"
+                    className="p-1 border border-slate-200 hover:border-red-300 hover:bg-white text-slate-500 hover:text-red-655 rounded transition-all cursor-pointer"
                   >
                     <FaTrash size={10} />
                   </button>
                 </div>
               </div>
 
-              <p className="text-slate-605 text-xs leading-relaxed">{s.description}</p>
+              {s.image && (
+                <div className="w-full h-32 rounded-lg border border-slate-200 overflow-hidden bg-white mb-2 flex items-center justify-center">
+                  <img src={s.image} alt={s.title} className="max-h-full max-w-full object-contain p-2" />
+                </div>
+              )}
+
+              <p className="text-slate-600 text-xs leading-relaxed">{s.description}</p>
               
               <ul className="space-y-2 text-[11px] text-slate-550">
                 {s.features?.map((f, i) => (
@@ -1376,108 +1575,12 @@ function ServicesTab() {
               </ul>
             </div>
             
-            <div className="border-t border-slate-200/60 pt-4 mt-6 text-[10px] text-slate-405 font-mono">
+            <div className="border-t border-slate-200/60 pt-4 mt-6 text-[10px] text-slate-400 font-mono">
               Identifier Key: {s.slug}
             </div>
           </div>
         ))}
       </div>
-
-      {modalOpen && (
-        <div className="fixed inset-0 bg-slate-950/55 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <div className="bg-white border border-slate-200 rounded-xl max-w-xl w-full shadow-2xl relative">
-            <div className="absolute top-0 left-0 w-full h-[3px] bg-orange-600"></div>
-            
-            <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100">
-              <h4 className="font-heading font-bold text-base text-slate-900">
-                {editService ? 'Modify Service Module' : 'Configure Service Offering'}
-              </h4>
-              <button onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-600 cursor-pointer">
-                <FaTimes size={16} />
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="p-6 space-y-5 text-xs text-slate-700">
-              <div className="space-y-1.5">
-                <label className="font-semibold text-slate-505 uppercase tracking-wider block">Service Title</label>
-                <input 
-                  type="text" 
-                  required 
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Custom Panel Fabrication"
-                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="font-semibold text-slate-505 uppercase tracking-wider block">Short Description</label>
-                <textarea 
-                  rows="3" 
-                  required
-                  value={desc}
-                  onChange={(e) => setDesc(e.target.value)}
-                  placeholder="Outline the focus and limits of this service catalog entry..."
-                  className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800 resize-none"
-                ></textarea>
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex justify-between items-center border-b border-slate-100 pb-2">
-                  <label className="font-semibold text-slate-900 uppercase tracking-wider">Features / Scope items</label>
-                  <button 
-                    type="button" 
-                    onClick={() => setFeats([...feats, ''])}
-                    className="text-orange-600 font-semibold cursor-pointer"
-                  >
-                    + Add row
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  {feats.map((feat, index) => (
-                    <div key={index} className="flex gap-2 items-center">
-                      <input 
-                        type="text" 
-                        placeholder="e.g. 3D CAD modeling and FAT logs provided" 
-                        value={feat}
-                        onChange={(e) => {
-                          const newFeats = [...feats];
-                          newFeats[index] = e.target.value;
-                          setFeats(newFeats);
-                        }}
-                        className="w-full bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-orange-500 rounded px-3 py-2 text-slate-800"
-                      />
-                      <button 
-                        type="button" 
-                        onClick={() => setFeats(feats.filter((_, i) => i !== index))}
-                        className="text-red-500 p-2 cursor-pointer"
-                      >
-                        <FaTrash size={10} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-slate-100 pt-5 flex justify-end gap-3">
-                <button 
-                  type="button" 
-                  onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 border border-slate-205 hover:border-slate-350 hover:bg-slate-55 text-slate-550 rounded font-semibold transition-all cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit"
-                  className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded font-semibold transition-all cursor-pointer shadow-md shadow-orange-600/10"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

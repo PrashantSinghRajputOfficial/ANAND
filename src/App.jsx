@@ -17,9 +17,6 @@ import Projects from './pages/Projects';
 import ProjectDetails from './pages/ProjectDetails';
 import Industries from './pages/Industries';
 import Gallery from './pages/Gallery';
-import Blogs from './pages/Blogs';
-import BlogDetails from './pages/BlogDetails';
-import Careers from './pages/Careers';
 import Contact from './pages/Contact';
 import Downloads from './pages/Downloads';
 import Quote from './pages/Quote';
@@ -59,9 +56,6 @@ function AppContent() {
           <Route path="/projects/:slug" element={<ProjectDetails />} />
           <Route path="/industries" element={<Industries />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:slug" element={<BlogDetails />} />
-          <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/downloads" element={<Downloads />} />
           <Route path="/quote" element={<Quote />} />
