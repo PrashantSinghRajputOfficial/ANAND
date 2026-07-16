@@ -306,5 +306,103 @@
     "page": "/products/dg-set-panel",
     "device": "Desktop",
     "date": "2026-07-16T12:29:39.931Z"
+  },
+  {
+    "id": "visit-1784205832029",
+    "ip": "127.0.0.1",
+    "page": "/products/dg-set-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:43:52.029Z"
+  },
+  {
+    "id": "visit-1784205832033",
+    "ip": "127.0.0.1",
+    "page": "/products/dg-set-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:43:52.033Z"
+  },
+  {
+    "id": "visit-1784205832084",
+    "ip": "127.0.0.1",
+    "page": "/products/apfc-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:43:52.084Z"
+  },
+  {
+    "id": "visit-1784205832087",
+    "ip": "127.0.0.1",
+    "page": "/products/apfc-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:43:52.087Z"
+  },
+  {
+    "id": "visit-1784206137886",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:48:57.886Z"
+  },
+  {
+    "id": "visit-1784206137889",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:48:57.889Z"
+  },
+  {
+    "id": "visit-1784206143462",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:49:03.462Z"
+  },
+  {
+    "id": "visit-1784206143468",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:49:03.468Z"
+  },
+  {
+    "id": "visit-1784206149453",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:49:09.453Z"
+  },
+  {
+    "id": "visit-1784206149463",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:49:09.463Z"
+  },
+  {
+    "id": "visit-1784206648756",
+    "ip": "127.0.0.1",
+    "page": "/projects/test",
+    "device": "Desktop",
+    "date": "2026-07-16T12:57:28.756Z"
+  },
+  {
+    "id": "visit-1784206648759",
+    "ip": "127.0.0.1",
+    "page": "/projects/test",
+    "device": "Desktop",
+    "date": "2026-07-16T12:57:28.759Z"
+  },
+  {
+    "id": "visit-1784206651697",
+    "ip": "127.0.0.1",
+    "page": "/projects/test",
+    "device": "Desktop",
+    "date": "2026-07-16T12:57:31.697Z"
+  },
+  {
+    "id": "visit-1784206651700",
+    "ip": "127.0.0.1",
+    "page": "/projects/test",
+    "device": "Desktop",
+    "date": "2026-07-16T12:57:31.700Z"
   }
 ]
