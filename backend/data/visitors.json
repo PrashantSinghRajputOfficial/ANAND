@@ -1,0 +1,310 @@
+[
+  {
+    "id": "visit-1784203370411",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:02:50.411Z"
+  },
+  {
+    "id": "visit-1784203370414",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:02:50.414Z"
+  },
+  {
+    "id": "visit-1784203388387",
+    "ip": "127.0.0.1",
+    "page": "/projects",
+    "device": "Desktop",
+    "date": "2026-07-16T12:03:08.387Z"
+  },
+  {
+    "id": "visit-1784203389694",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:03:09.694Z"
+  },
+  {
+    "id": "visit-1784203389697",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:03:09.697Z"
+  },
+  {
+    "id": "visit-1784203412146",
+    "ip": "127.0.0.1",
+    "page": "/projects",
+    "device": "Desktop",
+    "date": "2026-07-16T12:03:32.146Z"
+  },
+  {
+    "id": "visit-1784203417491",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:03:37.491Z"
+  },
+  {
+    "id": "visit-1784203768964",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:09:28.964Z"
+  },
+  {
+    "id": "visit-1784203768968",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:09:28.968Z"
+  },
+  {
+    "id": "visit-1784204589977",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:09.977Z"
+  },
+  {
+    "id": "visit-1784204589980",
+    "ip": "127.0.0.1",
+    "page": "/",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:09.980Z"
+  },
+  {
+    "id": "visit-1784204593064",
+    "ip": "127.0.0.1",
+    "page": "/about",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:13.064Z"
+  },
+  {
+    "id": "visit-1784204600138",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:20.138Z"
+  },
+  {
+    "id": "visit-1784204622471",
+    "ip": "127.0.0.1",
+    "page": "/about",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:42.471Z"
+  },
+  {
+    "id": "visit-1784204629868",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:49.868Z"
+  },
+  {
+    "id": "visit-1784204632559",
+    "ip": "127.0.0.1",
+    "page": "/products/dg-set-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:52.559Z"
+  },
+  {
+    "id": "visit-1784204634060",
+    "ip": "127.0.0.1",
+    "page": "/products/ht-lt-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:23:54.060Z"
+  },
+  {
+    "id": "visit-1784204648758",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:08.759Z"
+  },
+  {
+    "id": "visit-1784204648763",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:08.763Z"
+  },
+  {
+    "id": "visit-1784204657622",
+    "ip": "127.0.0.1",
+    "page": "/projects",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:17.622Z"
+  },
+  {
+    "id": "visit-1784204666311",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:26.311Z"
+  },
+  {
+    "id": "visit-1784204666316",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:26.316Z"
+  },
+  {
+    "id": "visit-1784204667560",
+    "ip": "127.0.0.1",
+    "page": "/products/dg-set-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:27.560Z"
+  },
+  {
+    "id": "visit-1784204669761",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:29.761Z"
+  },
+  {
+    "id": "visit-1784204669763",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:24:29.763Z"
+  },
+  {
+    "id": "visit-1784204703272",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:25:03.272Z"
+  },
+  {
+    "id": "visit-1784204770577",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:26:10.577Z"
+  },
+  {
+    "id": "visit-1784204770581",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:26:10.581Z"
+  },
+  {
+    "id": "visit-1784204864441",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:27:44.441Z"
+  },
+  {
+    "id": "visit-1784204864446",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:27:44.446Z"
+  },
+  {
+    "id": "visit-1784204874420",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:27:54.420Z"
+  },
+  {
+    "id": "visit-1784204874425",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:27:54.425Z"
+  },
+  {
+    "id": "visit-1784204881960",
+    "ip": "127.0.0.1",
+    "page": "/about",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:01.960Z"
+  },
+  {
+    "id": "visit-1784204904663",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:24.663Z"
+  },
+  {
+    "id": "visit-1784204904666",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:24.666Z"
+  },
+  {
+    "id": "visit-1784204912964",
+    "ip": "127.0.0.1",
+    "page": "/products/electric-control-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:32.964Z"
+  },
+  {
+    "id": "visit-1784204920885",
+    "ip": "127.0.0.1",
+    "page": "/leadership",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:40.885Z"
+  },
+  {
+    "id": "visit-1784204922075",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:42.075Z"
+  },
+  {
+    "id": "visit-1784204922077",
+    "ip": "127.0.0.1",
+    "page": "/services",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:42.077Z"
+  },
+  {
+    "id": "visit-1784204925073",
+    "ip": "127.0.0.1",
+    "page": "/projects",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:45.073Z"
+  },
+  {
+    "id": "visit-1784204931626",
+    "ip": "127.0.0.1",
+    "page": "/products/electric-control-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:51.626Z"
+  },
+  {
+    "id": "visit-1784204935777",
+    "ip": "127.0.0.1",
+    "page": "/products/apfc-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:28:55.777Z"
+  },
+  {
+    "id": "visit-1784204979927",
+    "ip": "127.0.0.1",
+    "page": "/products/dg-set-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:29:39.927Z"
+  },
+  {
+    "id": "visit-1784204979931",
+    "ip": "127.0.0.1",
+    "page": "/products/dg-set-panel",
+    "device": "Desktop",
+    "date": "2026-07-16T12:29:39.931Z"
+  }
+]
