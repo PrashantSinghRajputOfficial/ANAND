@@ -32,7 +32,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 // Connect to Database
-// connectDB();
+connectDB();
 
 const app = express();
 
