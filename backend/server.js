@@ -48,15 +48,20 @@ const uploadDir = process.env.VERCEL
 app.use('/uploads', express.static(uploadDir));
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/products', require('./routes/products'));
-app.use('/api/projects', require('./routes/projects'));
-app.use('/api/services', require('./routes/services'));
-app.use('/api/blogs', require('./routes/blogs'));
-app.use('/api/inquiries', require('./routes/inquiries'));
-app.use('/api/applications', require('./routes/applications'));
-app.use('/api/jobs', require('./routes/jobs'));
-app.use('/api/visitors', require('./routes/visitors'));
+const apiRouter = express.Router();
+apiRouter.use('/auth', require('./routes/auth'));
+apiRouter.use('/products', require('./routes/products'));
+apiRouter.use('/projects', require('./routes/projects'));
+apiRouter.use('/services', require('./routes/services'));
+apiRouter.use('/blogs', require('./routes/blogs'));
+apiRouter.use('/inquiries', require('./routes/inquiries'));
+apiRouter.use('/applications', require('./routes/applications'));
+apiRouter.use('/jobs', require('./routes/jobs'));
+apiRouter.use('/visitors', require('./routes/visitors'));
+
+// Mount under both '/api' and '/' to support local development and cPanel Phusion Passenger sub-path routing
+app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 // Default Route
 app.get('/', (req, res) => {
