@@ -48,20 +48,42 @@ const uploadDir = process.env.VERCEL
 app.use('/uploads', express.static(uploadDir));
 
 // Routes
-const apiRouter = express.Router();
-apiRouter.use('/auth', require('./routes/auth'));
-apiRouter.use('/products', require('./routes/products'));
-apiRouter.use('/projects', require('./routes/projects'));
-apiRouter.use('/services', require('./routes/services'));
-apiRouter.use('/blogs', require('./routes/blogs'));
-apiRouter.use('/inquiries', require('./routes/inquiries'));
-apiRouter.use('/applications', require('./routes/applications'));
-apiRouter.use('/jobs', require('./routes/jobs'));
-apiRouter.use('/visitors', require('./routes/visitors'));
+const authRoute = require('./routes/auth');
+const productsRoute = require('./routes/products');
+const projectsRoute = require('./routes/projects');
+const servicesRoute = require('./routes/services');
+const blogsRoute = require('./routes/blogs');
+const inquiriesRoute = require('./routes/inquiries');
+const applicationsRoute = require('./routes/applications');
+const jobsRoute = require('./routes/jobs');
+const visitorsRoute = require('./routes/visitors');
 
-// Mount under both '/api' and '/' to support local development and cPanel Phusion Passenger sub-path routing
-app.use('/api', apiRouter);
-app.use('/', apiRouter);
+app.use('/api/auth', authRoute);
+app.use('/auth', authRoute);
+
+app.use('/api/products', productsRoute);
+app.use('/products', productsRoute);
+
+app.use('/api/projects', projectsRoute);
+app.use('/projects', projectsRoute);
+
+app.use('/api/services', servicesRoute);
+app.use('/services', servicesRoute);
+
+app.use('/api/blogs', blogsRoute);
+app.use('/blogs', blogsRoute);
+
+app.use('/api/inquiries', inquiriesRoute);
+app.use('/inquiries', inquiriesRoute);
+
+app.use('/api/applications', applicationsRoute);
+app.use('/applications', applicationsRoute);
+
+app.use('/api/jobs', jobsRoute);
+app.use('/jobs', jobsRoute);
+
+app.use('/api/visitors', visitorsRoute);
+app.use('/visitors', visitorsRoute);
 
 // Default Route
 app.get('/', (req, res) => {
