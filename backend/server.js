@@ -7,19 +7,26 @@ const logFile = path.join(__dirname, 'debug.log');
 fs.writeFileSync(logFile, `=== Startup at ${new Date().toISOString()} ===\n`, 'utf-8');
 
 // Redirect console.log and console.error
-const logStream = fs.createWriteStream(logFile, { flags: 'a' });
 console.log = function(...args) {
-  logStream.write(`[LOG] ${args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ')}\n`);
+  try {
+    fs.appendFileSync(logFile, `[LOG] ${args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ')}\n`, 'utf-8');
+  } catch (e) {}
 };
 console.error = function(...args) {
-  logStream.write(`[ERR] ${args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ')}\n`);
+  try {
+    fs.appendFileSync(logFile, `[ERR] ${args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ')}\n`, 'utf-8');
+  } catch (e) {}
 };
 console.warn = function(...args) {
-  logStream.write(`[WARN] ${args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ')}\n`);
+  try {
+    fs.appendFileSync(logFile, `[WARN] ${args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ')}\n`, 'utf-8');
+  } catch (e) {}
 };
 
 process.on('uncaughtException', (err) => {
-  fs.appendFileSync(logFile, `[UNCAUGHT EXCEPTION] ${err.stack || err}\n`, 'utf-8');
+  try {
+    fs.appendFileSync(logFile, `[UNCAUGHT EXCEPTION] ${err.stack || err}\n`, 'utf-8');
+  } catch (e) {}
   process.exit(1);
 });
 

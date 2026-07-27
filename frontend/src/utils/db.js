@@ -4,7 +4,7 @@ import projectsData from '../data/projects.json';
 import servicesData from '../data/services.json';
 import blogsData from '../data/blogs.json';
 
-const API_URL = import.meta.env.DEV ? 'http://localhost:5000/api' : 'https://anandelectricals.in/api';
+const API_URL = import.meta.env.DEV ? 'http://localhost:5000/api' : 'https://anandelectricals.in/backend-api';
 
 // Create Axios Instance with timeout
 const api = axios.create({
