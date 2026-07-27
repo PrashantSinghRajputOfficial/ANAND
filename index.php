@@ -11,11 +11,15 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $_SERVER['REQUEST_METHOD']);
 
 $headers = [];
 $has_auth = false;
+$has_xff = false;
 foreach (getallheaders() as $key => $value) {
     if (strtolower($key) !== 'host') {
         $headers[] = "$key: $value";
         if (strtolower($key) === 'authorization') {
             $has_auth = true;
+        }
+        if (strtolower($key) === 'x-forwarded-for') {
+            $has_xff = true;
         }
     }
 }
@@ -24,6 +28,16 @@ if (!$has_auth) {
         $headers[] = "Authorization: " . $_SERVER['HTTP_AUTHORIZATION'];
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $headers[] = "Authorization: " . $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+    }
+}
+if (!$has_xff) {
+    $headers[] = "X-Forwarded-For: " . $_SERVER['REMOTE_ADDR'];
+} else {
+    foreach ($headers as &$hdr) {
+        if (stripos($hdr, 'X-Forwarded-For:') === 0) {
+            $hdr .= ", " . $_SERVER['REMOTE_ADDR'];
+            break;
+        }
     }
 }
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
