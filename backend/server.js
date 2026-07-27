@@ -1,6 +1,6 @@
-require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const logFile = path.join(__dirname, 'debug.log');
 
 // Clear debug log on start
@@ -100,11 +100,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-if (require.main === module) {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 module.exports = app;
