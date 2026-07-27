@@ -10,6 +10,16 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 4000
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    
+    // Auto seed empty collections in background
+    setTimeout(async () => {
+      try {
+        const autoSeed = require('./autoSeed');
+        await autoSeed();
+      } catch (seedErr) {
+        console.error(`Auto seed error: ${seedErr.message}`);
+      }
+    }, 500);
   } catch (error) {
     console.warn(`Local MongoDB connection failed: ${error.message}`);
     if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {

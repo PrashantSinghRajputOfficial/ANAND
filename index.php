@@ -10,9 +10,20 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $_SERVER['REQUEST_METHOD']);
 
 $headers = [];
+$has_auth = false;
 foreach (getallheaders() as $key => $value) {
     if (strtolower($key) !== 'host') {
         $headers[] = "$key: $value";
+        if (strtolower($key) === 'authorization') {
+            $has_auth = true;
+        }
+    }
+}
+if (!$has_auth) {
+    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $headers[] = "Authorization: " . $_SERVER['HTTP_AUTHORIZATION'];
+    } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        $headers[] = "Authorization: " . $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
     }
 }
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
